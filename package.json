@@ -1,0 +1,25 @@
+{
+  "name": "AIKIN",
+  "description": "Telegram AI",
+  "version": "1.2.0",
+  "main": "app.js",
+  "author": "NullDev",
+  "maintainers": [
+    {
+      "name": "NullDev",
+      "email": "admin@nulldev.org",
+      "web": "nulldev.org"
+    }
+  ],
+  "licenses": [
+    {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0/"
+    }
+  ],
+  "dependencies": {
+    "node-telegram-bot-api": "^0.27.0",
+    "delayed": "^1.0.1"
+  },
+  "homepage": "https://nulldev.org"
+}
