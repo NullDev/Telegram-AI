@@ -40,5 +40,6 @@ bot.on('message', (msg) => {
       bot.sendMessage(_id, jsonraw.reply);
       console.log('\nUSER CHAT REPLY: ' + jsonraw.reply + "\n");
     });
-  }	
+  }
+  catch(err){ return; }
 });
