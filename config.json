@@ -1,7 +1,11 @@
 {
    "bot": {
       "token": "TELEGRAM-TOKEN-CENSORED",
-      "nl-token": "NULLDEV-TOKEN-CENSORED",
+      "nl_token": "NULLDEV-TOKEN-CENSORED",
       "botname": "AIKIN_bot"
+   },
+   "dev": {
+      "devmode": "0",
+      "devs": ["nullping"]
    }
 }
