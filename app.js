@@ -26,7 +26,7 @@ console.log('\nLOADED JSON DATA:\n' + jsondata);
 var aikin_api = new aikin;
 aikin_api.set({ nlkey: nltoken });
 const bot = new tg(token, { polling: true });
-console.log('\n#-#-#-#-#-#-#-#-#-#-#\n#-------------------#\n# AIKIN BOT STARTED #\n#-------------------#\n#-#-#-#-#-#-#-#-#-#-#\n\n-- Copyright (c) 2017 NullDev --\n\nListening...\n\n');
+console.log('\n#-#-#-#-#-#-#-#-#-#-#\n#-------------------#\n# AIKIN BOT STARTED #\n#-------------------#\n#-#-#-#-#-#-#-#-#-#-#\n\n-- Copyright (c) 2017 NullDev --\n\nListening...');
 bot.on('message', (msg) => {
 	var txt   = msg.text;
 	var from  = msg.chat.username;
