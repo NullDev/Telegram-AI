@@ -5,6 +5,11 @@ This bot is an Long Term Memory AI (Artificial Intelligence) called AIKIN.
 
 The name A.I.K.I.N. stands for `Artificial Intelligence Knowlege Input Notation`.
 
+<b>The username of the bot is `aikin_bot`</b>
+
+You can chat with it right away! <br>
+Just message @aikin_bot or click this link: <a href="http://t.me/aikin_bot">t.me/aikin_bot</a>
+
 ## NOTE:
 
 This is only the bot (client) and **NOT** the AI itself. 
