@@ -8,9 +8,9 @@ var fs = require('fs');
 var process = require('process');
 process.on('uncaughtException', function(err) { console.error((err && err.stack) ? err.stack : err); });
 console.log('\n\n\n' +
-			'+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n' +
-			'      INITIALIZING BOT...    \n' +
-			'+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n'
+	    '+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n' +
+	    '      INITIALIZING BOT...    \n' +
+	    '+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n'
 );
 var _s = "\n-----------------------------------------";
 require.extensions['.json'] = function (module, filename) { module.exports = fs.readFileSync(filename, 'utf8'); };
