@@ -29,6 +29,8 @@ console.log('\n#-#-#-#-#-#-#-#-#-#-#\n#-------------------#\n# AIKIN BOT STARTED
 bot.on('message', (msg) => {
 	var txt   = msg.text;
 	var from  = msg.chat.username;
+	//Username could be non-existant
+	if (typeof from === 'undefined' || !from || from == null) from = "Unknown";
 	var name  = msg.chat.first_name;
 	const _id = msg.chat.id;
 	console.log(_s);
@@ -41,7 +43,7 @@ bot.on('message', (msg) => {
 			"So please check back later :)\n\nYou can contact the developer for more information:\n\n@NullPing"
 		);
 		console.log(_s);
-		console.log('USER ' + from + ' GOT DENIED. RESON: Maintenance Mode\n');
+		console.log('\nUSER ' + from + ' GOT DENIED. RESON: Maintenance Mode\n');
 		console.log(from.toLowerCase() + " != " + devs.toString());
 	}
 	else if (txt.indexOf('!-- ') === 0){
