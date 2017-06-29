@@ -51,7 +51,10 @@ bot.on('message', (msg) => {
 				
 			}
 			case "clearcache": {
-				if (devs.indexOf(from.toLowerCase()) > -1) bot.sendMessage(_id, "AIKIN: Cache Cleared. I forgot everything...");
+				if (devs.indexOf(from.toLowerCase()) > -1){
+					aikin_api.resetCache(function () { console.log("\n\n--- AIKIN RESET ---\n\n"); });
+					bot.sendMessage(_id, "AIKIN: Cache Cleared. I forgot everything...");
+				}
 				else bot.sendMessage(_id, "AIKIN: insufficient permissions...");
 			}
 		}
