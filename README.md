@@ -49,3 +49,10 @@ aikin.wrap(function(){
 ```
 
 So, If you want to use this telegram client for your own API you need to use the old code from above to connect to your endpoint, replacing `https:\/\/api.nulldev.org\/aikin.php` with the URI of your API.
+
+<p align="center">
+<br>
+<strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike> The Bot in Action <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike><br><br>
+<img src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s1.png" /><br>
+<br>
+</p>
