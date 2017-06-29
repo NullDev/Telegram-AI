@@ -7,5 +7,6 @@
    "dev": {
       "devmode": "0",
       "devs": ["nullping"]
-   }
+   },
+   "denylist": []
 }
