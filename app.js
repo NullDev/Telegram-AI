@@ -7,10 +7,11 @@ let request = require('request');
 var fs = require('fs');
 var process = require('process');
 process.on('uncaughtException', function(err) { console.error((err && err.stack) ? err.stack : err); });
-console.log('\n\n\n' +
-	    '+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n' +
-	    '      INITIALIZING BOT...    \n' +
-	    '+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n'
+console.log(
+	'\n\n\n'                          +
+	'+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n' +
+	'      INITIALIZING BOT...    \n' +
+	'+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n'
 );
 var _s = "\n-----------------------------------------";
 require.extensions['.json'] = function (module, filename) { module.exports = fs.readFileSync(filename, 'utf8'); };
@@ -26,7 +27,15 @@ console.log('\nLOADED JSON DATA:\n' + jsondata);
 var aikin_api = new aikin;
 aikin_api.set({ nlkey: nltoken });
 const bot = new tg(token, { polling: true });
-console.log('\n#-#-#-#-#-#-#-#-#-#-#\n#-------------------#\n# AIKIN BOT STARTED #\n#-------------------#\n#-#-#-#-#-#-#-#-#-#-#\n\n-- Copyright (c) 2017 NullDev --\n\nListening...');
+console.log(
+	'\n#-#-#-#-#-#-#-#-#-#-#'          +
+	'\n#-------------------#'          +
+	'\n# AIKIN BOT STARTED #'          +
+	'\n#-------------------#'          +
+	'\n#-#-#-#-#-#-#-#-#-#-#\n\n'      + 
+	'-- Copyright (c) 2017 NullDev --' +
+	'\n\nListening...'
+);
 bot.on('message', (msg) => {
 	var txt   = msg.text;
 	var from  = msg.chat.username;
