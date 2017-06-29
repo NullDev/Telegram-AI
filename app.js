@@ -71,8 +71,8 @@ bot.on('message', (msg) => {
 			"You can contact him here: @NullPing",
 			"If you wanna contact him, his username is @NullPing",
 			"If you wanna message him, his username is @NullPing",
-			"If you want to contact him, his username is @NullPing"
-			"If you wanna contact him, his username is @NullPing"
+			"If you want to contact him, his username is @NullPing",
+			"If you wanna contact him, his username is @NullPing",
 			"His username would be @NullPing"
 		],  
 		d1 = d1_f[Math.floor(Math.random() * d1_f.length)],
