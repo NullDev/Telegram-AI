@@ -16,6 +16,7 @@ var _s = "\n-----------------------------------------";
 require.extensions['.json'] = function (module, filename) { module.exports = fs.readFileSync(filename, 'utf8'); };
 var jsondata = require('./config.json'),
 	cfg      = JSON.parse(jsondata),
+	denylist = cfg.denylist,
 	token    = cfg.bot.token,
 	nltoken  = cfg.bot.nl_token,
 	_n       = cfg.bot.botname,
@@ -45,6 +46,15 @@ bot.on('message', (msg) => {
 		console.log(_s);
 		console.log('\nUSER ' + from + ' GOT DENIED. RESON: Maintenance Mode\n');
 		console.log(from.toLowerCase() + " != " + devs.toString());
+	}
+	else if (denylist.indexOf(from.toLowerCase()) > -1){
+		bot.sendMessage(_id, 
+			"Sorry, " + name + 
+			"... You got denied from using this bot. \n\nIf you think this is a mistake, please" +
+			" contact the developer:\n\n@NullPing"
+		);
+		console.log(_s);
+		console.log('\nUSER ' + from + ' GOT DENIED. RESON: Banned\n');
 	}
 	else if (txt.indexOf('!-- ') === 0){
 		var cmd = txt.slice('!-- '.length);
