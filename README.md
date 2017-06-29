@@ -14,6 +14,19 @@ Just message @aikin_bot or click this link: <a href="http://t.me/aikin_bot">t.me
 
 This is only the bot (client) and **NOT** the AI itself. 
 
+## The bot itself:
+
+<p align="center">
+<br>
+<strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike> Screenshot <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike><br><br>
+<div style="display:flex;">
+<img height="500" width="281" src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s2.jpeg" />
+<img height="500" width="281" src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s3.jpeg" />
+<img height="500" width="281" src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s4.jpeg" />
+</div>
+<br>
+</p>
+
 ## Developer Info:
 
 The bot used to call the NullDev AIKIN API Endpoint like 
