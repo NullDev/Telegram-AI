@@ -44,6 +44,8 @@ bot.on('message', (msg) => {
 	//Username could be non-existant
 	if (typeof from === 'undefined' || !from || from == null) from = "Unknown";
 	var name  = msg.chat.first_name;
+	//Just to be save
+	if (typeof name === 'undefined' || !name || name == null) name = "Unknown";
 	const _id = msg.chat.id;
 	console.log(_s);
 	console.log('\nUSER ' +  from + ' MADE CHAT MESSAGE: ' + txt + "\n");
