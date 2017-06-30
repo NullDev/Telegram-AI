@@ -20,7 +20,8 @@
   "dependencies": {
     "node-telegram-bot-api": "^0.27.0",
     "delayed": "^1.0.1",
-    "nulldev-aikin": "^1.0.0"
+    "nulldev-aikin": "^1.0.0",
+    "jjg-ping": "^1.0.1"
   },
   "homepage": "https://nulldev.org"
 }
