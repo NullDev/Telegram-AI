@@ -5,6 +5,8 @@ let util = require('util');
 let http = require('http');
 let request = require('request');
 var fs = require('fs');
+//Ping
+var ms = require('jjg-ping');
 var process = require('process');
 process.on('uncaughtException', function(err) { console.error((err && err.stack) ? err.stack : err); });
 console.log(
@@ -68,15 +70,51 @@ bot.on('message', (msg) => {
 	else if (txt.indexOf('!-- ') === 0){
 		var cmd = txt.slice('!-- '.length);
 		switch(cmd.toLowerCase()){
+			//Callback hell...
 			case "status": {
-				
+				aikin.wrap(function(){
+					aikin_api.ask("test", function (callback) {
+						ms.system.ping(uri1, function(l1, s1) {
+							ms.system.ping(uri2, function(l2, s2) {
+								bot.sendMessage(_id, 
+									"AIKIN Health Status: " + 
+									((typeof _c.message === 'undefined' || !_c.message || _c.message == null) ? "Dead" : "Healthy") +
+									"\nTelegram API Status: Online (Ping: " + l1 + ")" +
+									"\nNullDev Backend: Online (Ping: " + l2 + ")" +
+									"\nMain Developer: @NullPing" +
+									"\nUsers marked as Devs: " + devs.toString()
+								);
+							});
+						});
+					});
+				});
+				break;
 			}
 			case "clearcache": {
 				if (devs.indexOf(from.toLowerCase()) > -1){
 					aikin_api.resetCache(function () { console.log("\n\n--- AIKIN RESET ---\n\n"); });
 					bot.sendMessage(_id, "AIKIN: Cache Cleared. I forgot everything...");
 				}
-				else bot.sendMessage(_id, "AIKIN: insufficient permissions...");
+				else bot.sendMessage(_id, "AIKIN: Insufficient permissions...");
+				break;
+			}
+			case "ping": {
+				var _r = "Pong!";
+				console.log('\nUSER ' + from + ' MADE PING\n');
+				bot.sendMessage(_id, _r);
+				console.log('\nAIKIN REPLY: ' + _r + "\n");
+				break;
+			}
+			case "whoami": {
+				console.log('\nUSER ' + from + ' PERFORMED WHOAMI\n');
+				bot.sendMessage(_id, 
+					"First Name: "      + msg.chat.first_name    + 
+					"\nUser name: "     + from                   +
+					"\nLanguage-Code: " + msg.from.language_code +
+					"\nID: "            + msg.from.id            +
+					"\nIs Dev: "        + ((devs.indexOf(from.toLowerCase()) > -1) ? "Yes" : "No")
+				);
+				break;
 			}
 		}
 	}
