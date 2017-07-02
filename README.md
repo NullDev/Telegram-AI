@@ -66,7 +66,7 @@ aikin.wrap(function(){
 });
 ```
 
-So, If you want to use this telegram client for your own API you need to use the old code from above to connect to your endpoint, replacing `https:\/\/api.nulldev.org\/aikin.php` with the URI of your API.
+So, If you want to use this telegram client for your own API you need to use the old code from above to connect to your endpoint, replacing `https:\/\/api.nulldev.org\/aikin.php` with the URI of your API and change the callbacks. Also the Sightbot integration wont work as well since `https:\/\/api.nulldev.org\/sight-bot-ai.php` is locked down too.
 
 <p align="center">
 <br>
