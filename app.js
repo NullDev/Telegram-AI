@@ -101,6 +101,25 @@ bot.on('message', (msg) => {
 		console.log(_s);
 		console.log('\nUSER ' + from + ' GOT DENIED. RESON: Banned\n');
 	}
+	else if (typeof _pic !== 'undefined' && _pic != null){
+		console.log('\nUSER ' + from + ' SENT PICTURE');
+		var options = {
+			uri: "https:\/\/api.telegram.org\/bot" + token + "\/getFile?file_id=" + _pic,
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' }
+		};
+		try{
+			request(options, function(error, response, body){
+				var jsonraw = JSON.parse(body), _p = jsonraw.result.file_path;
+				console.log('\nGOT PATH: ' + _p);
+				var uri = "https:\/\/api.telegram.org\/file\/bot" + token + "\/" + _p;
+				console.log('GOT URI: ' + uri);
+				descImg(uri, _id);
+
+			});
+		}
+		catch(err){ return; }
+	}
 	else if (txt.indexOf('!-- ') === 0){
 		var cmd = txt.slice('!-- '.length);
 		switch(cmd.toLowerCase()){
