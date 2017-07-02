@@ -72,5 +72,6 @@ So, If you want to use this telegram client for your own API you need to use the
 <br>
 <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike> The Bot in Action <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike><br><br>
 <img src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s1.png" /><br>
+<img src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s5.png" /><br>
 <br>
 </p>
