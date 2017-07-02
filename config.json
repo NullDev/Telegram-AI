@@ -2,6 +2,7 @@
    "bot": {
       "token": "TELEGRAM-TOKEN-CENSORED",
       "nl_token": "NULLDEV-TOKEN-CENSORED",
+      "sight": "NULLDEV-SIGHTBOT-TOKEN-CENSORED",
       "botname": "AIKIN_bot"
    },
    "dev": {
