@@ -22,6 +22,7 @@ var jsondata = require('./config.json'),
 	denylist = cfg.denylist,
 	token    = cfg.bot.token,
 	nltoken  = cfg.bot.nl_token,
+        nlsight  = cfg.bot.sight,
 	_n       = cfg.bot.botname,
 	isDev    = cfg.dev.devmode,
 	devs     = String.prototype.toLowerCase.apply(cfg.dev.devs).split(",");
