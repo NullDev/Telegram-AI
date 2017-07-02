@@ -152,6 +152,13 @@ bot.on('message', (msg) => {
 				else bot.sendMessage(_id, "AIKIN: Insufficient permissions...");
 				break;
 			}
+			case "git": {
+				var _r = "The bot (client) is open source! :)\nGrab the code here:\n\nhttps://github.com/NLDev/Telegram-AI";
+				console.log('\nUSER ' + from + ' MADE GIT REQUEST\n');
+				bot.sendMessage(_id, _r);
+				console.log('AIKIN REPLY: ' + _r + "\n");
+				break;
+			}
 			case "ping": {
 				var _r = "Pong!";
 				console.log('\nUSER ' + from + ' MADE PING\n');
