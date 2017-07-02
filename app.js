@@ -38,6 +38,34 @@ console.log(
 	'-- Copyright (c) 2017 NullDev --' +
 	'\n\nListening...'
 );
+function descImg(url, id){
+	var options = {
+		uri: 'https:\/\/api.nulldev.org\/sight-bot-ai.php',
+		method: 'POST',
+		body: '{\"url\":\"' + url + '\"}',
+		headers: {
+			'NL-Token': nlsight,
+			'Content-Type': 'application/json'
+		}
+	};
+	try{
+		request(options, function(error, response, body){
+			if (error) console.log(_err);
+			else {
+				var jsonraw = JSON.parse(body);
+				if (jsonraw.description != null && jsonraw.description != ''){
+					console.log(_s);
+					console.log('\nSIGHT GOT URI: ' + url + "\nSIGHT GOT DESC: \n" + body + "\n");
+					var res = "I think it\'s " + jsonraw.description.captions[0].text;
+					bot.sendMessage(id, res);
+					console.log('AIKIN REPLY: ' + res);
+				}
+				else console.log(_err);
+			}
+		});
+	}
+	catch(err){ console.log(err);; }
+}
 bot.on('message', (msg) => {
 	var txt   = msg.text;
 	var from  = msg.chat.username;
@@ -46,9 +74,13 @@ bot.on('message', (msg) => {
 	var name  = msg.chat.first_name;
 	//Just to be save
 	if (typeof name === 'undefined' || !name || name == null) name = "Unknown";
+	//If picture
+	var _pic  = msg.photo;
+	if (typeof _pic !== 'undefined' && _pic != null) _pic = msg.photo[0].file_id;
 	const _id = msg.chat.id;
 	console.log(_s);
-	console.log('\nUSER ' +  from + ' MADE CHAT MESSAGE: ' + txt + "\n");
+	if (typeof txt !== 'undefined' && txt != null) console.log('\nUSER ' +  from + ' MADE CHAT MESSAGE: ' + txt + "\n");
+	if (typeof txt === 'undefined' || txt == null) console.log('\nUSER ' +  from + ' MADE CHAT PICTURE: ' + _pic + "\n");
 	console.log(JSON.stringify(msg));
 	if (isDev == 1 && !(devs.indexOf(from.toLowerCase()) > -1)){
 		bot.sendMessage(_id, 
