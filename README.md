@@ -14,7 +14,7 @@ Just message @aikin_bot or click this link: <a href="http://t.me/aikin_bot">t.me
 The bot has an included image recognisation feature. <br>
 Just send a Picture and let AIKIN describe it! 
 
-**Note:** This featurr is heavily in development and might not worl properly...
+**Note:** This feature is heavily in development and might not work properly...
 
 ## NOTE:
 
