@@ -135,6 +135,7 @@ bot.on('message', (msg) => {
 									((typeof _c.message === 'undefined' || !_c.message || _c.message == null) ? "Dead" : "Healthy") +
 									"\nTelegram API Status: Online (Ping: " + l1 + ")" +
 									"\nNullDev Backend: Online (Ping: " + l2 + ")" +
+									"\nIn Devmode: " + ((isDev == 1) ? "Yes" : "No") +
 									"\nMain Developer: @NullPing" +
 									"\nUsers marked as Devs: " + devs.toString()
 								);
