@@ -65,7 +65,7 @@ function descImg(url, id){
 			}
 		});
 	}
-	catch(err){ console.log(err);; }
+	catch(err){ console.log(err); }
 }
 bot.on('message', (msg) => {
 	var txt   = msg.text;
