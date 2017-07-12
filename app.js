@@ -93,7 +93,7 @@ bot.on('message', (msg) => {
 		console.log('\nUSER ' + from + ' GOT DENIED. RESON: Maintenance Mode\n');
 		console.log(from.toLowerCase() + " != " + devs.toString());
 	}
-	else if (denylist.indexOf(from.toLowerCase()) > -1){
+	else if (denylist.indexOf(from.toLowerCase()) > -1 || denylist.indexOf(_id) > -1){
 		bot.sendMessage(_id, 
 			"Sorry, " + name + 
 			"... You got denied from using this bot. \n\nIf you think this is a mistake, please" +
