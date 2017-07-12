@@ -45,6 +45,15 @@ This is only the bot (client) and **NOT** the AI itself.
 <br>
 </p>
 
+## Bot Features:
+
+- Denying Usernames and ID's
+- Maintenance Mode 
+- Admin/Dev List
+- Status Informations
+- Developer Info
+- WhoAmI Information
+
 ## Developer Info:
 
 The bot used to call the NullDev AIKIN API Endpoint like 
