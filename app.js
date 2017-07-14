@@ -183,7 +183,9 @@ bot.on('message', (msg) => {
 	//First message
 	else if (txt.toLowerCase() == "/start"){
 		console.log('\nUSER ' + from + ' STARTED FIRST TIME\n');
-		bot.sendMessage(_id, "Hii " + name + "!\n\n");
+                var craftedMsg = "Hii " + name + "!";
+                bot.sendMessage(_id, craftedMsg + "\n\n");
+                console.log('AIKIN REPLY: ' + craftedMsg);
 	}
 	//Developer Info (Without Database in case offline)
 	else if (/^((who is|whos|who's) (ur|your) (dev|developer|coder|programmer|owner|creator|maker))+(.*)$/i.test(txt) ||
