@@ -1,3 +1,5 @@
+<img style="width: 100%; height: auto;" src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/banner.jpg" />
+
 # Telegram-AI
 This is the code of the Telegram bot for AIKIN
 
