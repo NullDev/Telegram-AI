@@ -13,7 +13,7 @@ You can chat with it right away! <br>
 Just message @aikin_bot or click this link: <a href="http://t.me/aikin_bot">t.me/aikin_bot</a>
 
 ## Also:
-The bot has an included image recognisation feature. <br>
+The bot has an included image recognition feature. <br>
 Just send a Picture and let AIKIN describe it! 
 
 **Note:** This feature is heavily in development and might not work properly...
@@ -38,7 +38,7 @@ This is only the bot (client) and **NOT** the AI itself.
 
 <p align="center">
 <br>
-<strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike> Screenshots Image Recognisation <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike><br><br>
+<strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike> Screenshots Image Recognition <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike><br><br>
 <div style="display:flex;">
 <img height="500" width="281" src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s6.jpg" />
 <img height="500" width="281" src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s7.jpg" />
@@ -49,6 +49,10 @@ This is only the bot (client) and **NOT** the AI itself.
 
 ## Bot Features:
 
+- Normal Chat
+- Natural Language Processing
+- Long term memory
+- Image recognition
 - Denying Usernames and ID's
 - Maintenance Mode 
 - Admin/Dev List
