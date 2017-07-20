@@ -6,6 +6,7 @@
       "botname": "AIKIN_bot"
    },
    "dev": {
+      "offline_mode": "0",
       "devmode": "0",
       "devs": ["nullping"]
    },
