@@ -59,6 +59,7 @@ This is only the bot (client) and **NOT** the AI itself.
 - Status Informations
 - Developer Info
 - WhoAmI Information
+- Offline mode (console only; no telegram output)
 
 ## Developer Info:
 
