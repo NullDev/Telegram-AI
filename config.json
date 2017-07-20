@@ -10,5 +10,6 @@
       "devmode": 0,
       "devs": ["nullping"]
    },
-   "denylist": []
+   "denylist": [],
+   "grantlist": []
 }
