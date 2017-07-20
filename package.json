@@ -9,7 +9,7 @@
 		"email": "admin@nulldev.org",
 		"web": "nulldev.org"
 	}],
-	"license": "name": "Apache-2.0",
+	"license": "Apache-2.0",
 	"dependencies": {
 		"node-telegram-bot-api": "^0.27.0",
 		"delayed": "^1.0.1",
