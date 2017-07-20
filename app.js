@@ -24,6 +24,7 @@ var jsondata = require('./config.json'),
 	nltoken  = cfg.bot.nl_token,
         nlsight  = cfg.bot.sight,
 	_n       = cfg.bot.botname,
+        offmode  = cfg.dev.offline_mode,
 	isDev    = cfg.dev.devmode,
 	devs     = String.prototype.toLowerCase.apply(cfg.dev.devs).split(",");
 console.log('\nLOADED JSON DATA:\n' + jsondata);
