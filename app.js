@@ -79,7 +79,7 @@ bot.on('message', (msg) => {
 	//If picture
 	var _pic  = msg.photo;
 	if (typeof _pic !== 'undefined' && _pic != null) _pic = msg.photo[0].file_id;
-	const _id = msg.chat.id;
+	const _id = ((offmode == 0) ? msg.chat.id : null);
 	console.log(_s);
 	if (typeof txt !== 'undefined' && txt != null) console.log('\nUSER ' +  from + ' MADE CHAT MESSAGE: ' + txt + "\n");
 	if (typeof txt === 'undefined' || txt == null) console.log('\nUSER ' +  from + ' MADE CHAT PICTURE: ' + _pic + "\n");
