@@ -71,6 +71,7 @@ function descImg(url, id){
 bot.on('message', (msg) => {
 	var txt   = msg.text;
 	var from  = msg.chat.username;
+	var frID  = msg.from.id;
 	//Username could be non-existant
 	if (typeof from === 'undefined' || !from || from == null) from = "Unknown";
 	var name  = msg.chat.first_name;
@@ -84,7 +85,7 @@ bot.on('message', (msg) => {
 	if (typeof txt !== 'undefined' && txt != null) console.log('\nUSER ' +  from + ' MADE CHAT MESSAGE: ' + txt + "\n");
 	if (typeof txt === 'undefined' || txt == null) console.log('\nUSER ' +  from + ' MADE CHAT PICTURE: ' + _pic + "\n");
 	console.log(JSON.stringify(msg));
-	if (isDev == 1 && !(devs.indexOf(from.toLowerCase()) > -1)){
+	if (isDev == 1 && !(devs.indexOf(from.toLowerCase()) > -1) && !(devs.indexOf(frID.toString()) > -1)){
 		bot.sendMessage(_id, 
 			"Sorry, " + name + 
 			"... I am currently in maintenance mode! That normally means that my developer Chris is fixing bugs or programming features. " +
@@ -94,7 +95,7 @@ bot.on('message', (msg) => {
 		console.log('\nUSER ' + from + ' GOT DENIED. RESON: Maintenance Mode\n');
 		console.log(from.toLowerCase() + " != " + devs.toString());
 	}
-	else if (denylist.indexOf(from.toLowerCase()) > -1 || denylist.indexOf(_id) > -1){
+	else if (denylist.indexOf(from.toLowerCase()) > -1){
 		bot.sendMessage(_id, 
 			"Sorry, " + name + 
 			"... You got denied from using this bot. \n\nIf you think this is a mistake, please" +
@@ -147,7 +148,7 @@ bot.on('message', (msg) => {
 				break;
 			}
 			case "clearcache": {
-				if (devs.indexOf(from.toLowerCase()) > -1){
+				if ((devs.indexOf(from.toLowerCase()) > -1) || (devs.indexOf(frID.toString()) > -1)){
 					aikin_api.resetCache(function () { console.log("\n\n--- AIKIN RESET ---\n\n"); });
 					bot.sendMessage(_id, "AIKIN: Cache Cleared. I forgot everything...");
 				}
@@ -175,7 +176,7 @@ bot.on('message', (msg) => {
 					"\nUser name: "     + from                   +
 					"\nLanguage-Code: " + msg.from.language_code +
 					"\nID: "            + msg.from.id            +
-					"\nIs Dev: "        + ((devs.indexOf(from.toLowerCase()) > -1) ? "Yes" : "No")
+					"\nIs Dev: "        + (((devs.indexOf(from.toLowerCase()) > -1) || (devs.indexOf(frID.toString()) > -1)) ? "Yes" : "No")
 				);
 				break;
 			}
