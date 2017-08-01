@@ -22,6 +22,23 @@ Just send a Picture and let AIKIN describe it!
 
 This is only the bot (client) and **NOT** the AI itself. 
 
+However, our Emotion Tone recognition API is open to everyone!
+
+Endpoint: https://api.nulldev.org/emo
+
+Useage Example: https://api.nulldev.org/emo?text=I+am+fine
+
+Callback: <br>
+```javascript
+{
+    "given_text":"I am fine",
+    "emotion_tone":"positive",
+    "confidence_value":0.6998420293874229,
+    "confidence_percent":"69.98%",
+    "copyright":"NullDev"
+}
+```
+
 ## The bot itself:
 
 <p align="center">
