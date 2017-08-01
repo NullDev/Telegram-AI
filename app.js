@@ -68,19 +68,42 @@ function descImg(url, id){
 	}
 	catch(err){ console.log(err); }
 }
+
+function evalEmo(_in, id){
+	var options = {
+		uri : 'https://api.nulldev.org/emo?text=' + encodeURI(_in),
+		method : 'GET'
+	};
+	request(options, function(error, response, body){
+		if (error) {
+			bot.sendMessage(id, "err");
+			console.log(error);
+		}
+		else {
+			console.log("AIKIN: Got callback: " + body);
+			var emoParsed = JSON.parse(body);
+			var _r = "Emotion Tone: " + emoParsed.emotion_tone + 
+					 "\nConfidence (Value): " + emoParsed.confidence_value + 
+					 "\nConfidence (in %): " + emoParsed.confidence_percent;
+			bot.sendMessage(id, _r);
+			console.log('\nAIKIN REPLY: ' + _r);
+		}
+	});
+}
+
 bot.on('message', (msg) => {
-	var txt   = msg.text;
+	var txt   = msg.text.replace(/\//gi, "");
 	var from  = msg.chat.username;
 	var frID  = msg.from.id;
 	//Username could be non-existant
-	if (typeof from === 'undefined' || !from || from == null) from = "Unknown";
+	if (typeof from === 'undefined' || !from || from == null) from = frID;
 	var name  = msg.chat.first_name;
 	//Just to be save
 	if (typeof name === 'undefined' || !name || name == null) name = "Unknown";
 	//If picture
 	var _pic  = msg.photo;
 	if (typeof _pic !== 'undefined' && _pic != null) _pic = msg.photo[0].file_id;
-	const _id = ((offmode == 0) ? msg.chat.id : null);
+	const _id = msg.chat.id;
 	console.log(_s);
 	if (typeof txt !== 'undefined' && txt != null) console.log('\nUSER ' +  from + ' MADE CHAT MESSAGE: ' + txt + "\n");
 	if (typeof txt === 'undefined' || txt == null) console.log('\nUSER ' +  from + ' MADE CHAT PICTURE: ' + _pic + "\n");
@@ -124,62 +147,71 @@ bot.on('message', (msg) => {
 		catch(err){ return; }
 	}
 	else if (txt.indexOf('!-- ') === 0){
-		var cmd = txt.slice('!-- '.length);
-		switch(cmd.toLowerCase()){
-			//Callback hell...
-			case "status": {
-				aikin.wrap(function(){
-					aikin_api.ask("test", function (callback) {
-						ms.system.ping(uri1, function(l1, s1) {
-							ms.system.ping(uri2, function(l2, s2) {
-								bot.sendMessage(_id, 
-									"AIKIN Health Status: " + 
-									((typeof _c.message === 'undefined' || !_c.message || _c.message == null) ? "Dead" : "Healthy") +
-									"\nTelegram API Status: Online (Ping: " + l1 + ")" +
-									"\nNullDev Backend: Online (Ping: " + l2 + ")" +
-									"\nIn Devmode: " + ((isDev == 1) ? "Yes" : "No") +
-									"\nMain Developer: @NullPing" +
-									"\nUsers marked as Devs: " + devs.toString()
-								);
-							});
+		var cmd = txt.slice('!-- '.length), uri1 = "http://core.telegram.com", uri2 = "http://nulldev.org";
+		console.log('\nUSER ' + from + ' PERFORMED COMMAND: ' + cmd + '\n');
+		//Callback hell...
+		if (cmd.toLowerCase() == "status") {
+			aikin.prepare(function(){
+				aikin_api.write("test", function (_c) {
+					ms.system.ping(uri1, function(l1, s1) {
+						ms.system.ping(uri2, function(l2, s2) {
+							bot.sendMessage(_id, 
+								"AIKIN Health Status: " + 
+								((typeof _c === 'undefined' || _c == null) ? "Dead" : "Healthy") +
+								"\nTelegram API Status: Online (Ping: " + l1 + ")" +
+								"\nNullDev Backend: Online (Ping: " + l2 + ")" +
+								"\nIn Devmode: " + ((isDev == 1) ? "Yes" : "No") +
+								"\nMain Developer: @NullPing" +
+								"\nUsers marked as Devs: " + devs.toString()
+							);
 						});
 					});
 				});
-				break;
+			});
+		}
+		if (cmd.toLowerCase() == "clearcache") {
+			if ((devs.indexOf(from.toLowerCase()) > -1) || (devs.indexOf(frID.toString()) > -1)){
+				aikin_api.resetCache(function () { console.log("\n\n--- AIKIN RESET ---\n\n"); });
 			}
-			case "clearcache": {
-				if ((devs.indexOf(from.toLowerCase()) > -1) || (devs.indexOf(frID.toString()) > -1)){
-					aikin_api.resetCache(function () { console.log("\n\n--- AIKIN RESET ---\n\n"); });
-					bot.sendMessage(_id, "AIKIN: Cache Cleared. I forgot everything...");
-				}
-				else bot.sendMessage(_id, "AIKIN: Insufficient permissions...");
-				break;
-			}
-			case "git": {
-				var _r = "The bot (client) is open source! :)\nGrab the code here:\n\nhttps://github.com/NLDev/Telegram-AI";
-				console.log('\nUSER ' + from + ' MADE GIT REQUEST\n');
-				bot.sendMessage(_id, _r);
-				console.log('AIKIN REPLY: ' + _r + "\n");
-				break;
-			}
-			case "ping": {
-				var _r = "Pong!";
-				console.log('\nUSER ' + from + ' MADE PING\n');
+			else bot.sendMessage(_id, "AIKIN: Insufficient permissions...");
+		}
+		if (cmd.toLowerCase() == "git") {
+			var _r = "The bot (client) is open source! :)\nGrab the code here:\n\nhttps://github.com/NLDev/Telegram-AI";
+			bot.sendMessage(_id, _r);
+			console.log('AIKIN REPLY: ' + _r + "\n");
+		}
+		if (cmd.toLowerCase() == "ping") {
+			var _r = "Pong!";
+			bot.sendMessage(_id, _r);
+			console.log('\nAIKIN REPLY: ' + _r + "\n");
+		}
+		if (cmd.toLowerCase().indexOf("emo") === 0) {
+			var _txt = cmd.slice('emo '.length);
+			if (_txt == ""){
+				var _r = "AIKIN: Usage: !-- emo your text";
 				bot.sendMessage(_id, _r);
 				console.log('\nAIKIN REPLY: ' + _r + "\n");
-				break;
 			}
-			case "whoami": {
-				console.log('\nUSER ' + from + ' PERFORMED WHOAMI\n');
-				bot.sendMessage(_id, 
-					"First Name: "      + msg.chat.first_name    + 
-					"\nUser name: "     + from                   +
-					"\nLanguage-Code: " + msg.from.language_code +
-					"\nID: "            + msg.from.id            +
-					"\nIs Dev: "        + (((devs.indexOf(from.toLowerCase()) > -1) || (devs.indexOf(frID.toString()) > -1)) ? "Yes" : "No")
-				);
-				break;
-			}
+			else evalEmo(_txt, _id);
+		}
+		if (cmd.toLowerCase() == "whoami") {
+			bot.sendMessage(_id, 
+				"First Name: "      + msg.chat.first_name    + 
+				"\nUser name: "     + from                   +
+				"\nLanguage-Code: " + msg.from.language_code +
+				"\nID: "            + msg.from.id            +
+				"\nIs Dev: "        + (((devs.indexOf(from.toLowerCase()) > -1) || (devs.indexOf(frID.toString()) > -1)) ? "Yes" : "No")
+			);
+		}
+		if (cmd.toLowerCase() == "banner") {
+			bot.sendPhoto({
+				chatId: _id,
+				caption: 'AIKIN Banner',
+					photo: './banner.jpg'
+			}, function(err, msg) {
+				console.log(err);
+				console.log(msg);
+			});
 		}
 	}
 	//First message
