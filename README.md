@@ -76,7 +76,9 @@ Callback: <br>
 - Status Informations
 - Developer Info
 - WhoAmI Information
-- Offline mode (console only; no telegram output)
+- <s>Offline mode (console only; no telegram output)</s>
+- This is "silentmode" now
+- Emotion Recognition as mentioned above
 
 ## Developer Info:
 
