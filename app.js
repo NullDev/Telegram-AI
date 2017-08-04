@@ -91,7 +91,8 @@ function evalEmo(_in, id){
 	});
 }
 
-function isset(_var){ return ((_var && _var != null && _var != "" ) ? true : false) }
+function isset(_var) { return ((_var && _var != null && _var != "" ) ? true : false); }
+function isaDev(_from, _id) { return (((devs.indexOf(_from.toString().toLowerCase()) > -1) || (devs.indexOf(frID.toString()) > -1)) ? true : false); }
 
 function isIdle(){ 
 	var _res;
@@ -104,7 +105,7 @@ function isIdle(){
 
 bot.on('message', (msg) => {
 	var txt   = msg.text;
-	txt = (txt == null || !txt || txt == "") ? txt : txt.replace(/\//gi, "");
+	txt = isset(txt) ? txt.replace(/\//gi, "") : txt;
 	var from  = msg.chat.username;
 	var frID  = msg.from.id;
 	//Username could be non-existant
@@ -182,6 +183,11 @@ bot.on('message', (msg) => {
 						});
 					});
 				});
+			}
+			if (cmd.toLowerCase() == "help") {
+				var _r = "Commands:\n\n !-- status\n !-- git\n !-- ping\n !-- emo\n !-- silent\n !-- banner\n !-- whoami\n !-- help";
+				bot.sendMessage(_id, _r);
+				console.log('AIKIN REPLY: ' + _r + "\n");
 			}
 			if (cmd.toLowerCase() == "clearcache") {
 				if ((devs.indexOf(from.toString().toLowerCase()) > -1) || (devs.indexOf(frID.toString()) > -1)){
