@@ -92,7 +92,8 @@ function evalEmo(_in, id){
 }
 
 function isset(_var) { return ((_var && _var != null && _var != "" ) ? true : false); }
-function isaDev(_from, _id) { return (((devs.indexOf(_from.toString().toLowerCase()) > -1) || (devs.indexOf(frID.toString()) > -1)) ? true : false); }
+function isaDev(_from, _id) { return ((devs.indexOf(_from.toString().toLowerCase()) > -1 || devs.indexOf(frID.toString()) > -1) ? true : false); }
+function isDenied(_from, _id) { return ((denylist.indexOf(from.toString().toLowerCase()) > -1 || denylist.indexOf(frID.toString().toLowerCase()) > -1) ? true : false); }
 
 function isIdle(){ 
 	var _res;
@@ -133,7 +134,7 @@ bot.on('message', (msg) => {
 			console.log('\nUSER ' + from + ' GOT DENIED. RESON: Maintenance Mode\n');
 			console.log(from.toString().toLowerCase() + " != " + devs.toString());
 		}
-		else if (denylist.indexOf(from.toString().toLowerCase()) > -1){
+		else if (isDenied(from, frID)){
 			bot.sendMessage(_id, 
 				"Sorry, " + name + 
 				"... You got denied from using this bot. \n\nIf you think this is a mistake, please" +
