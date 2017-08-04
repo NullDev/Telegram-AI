@@ -31,6 +31,7 @@ Useage Example: https://api.nulldev.org/emo?text=I+am+fine
 Callback: <br>
 ```javascript
 {
+    "error":0,
     "given_text":"I am fine",
     "emotion_tone":"positive",
     "confidence_value":0.6998420293874229,
@@ -38,6 +39,13 @@ Callback: <br>
     "copyright":"NullDev"
 }
 ```
+
+Explanation: <br>
+`error`: 0 = No error; 1 = Error, see "`message`" <br>
+`given_text`: The input <br>
+`emotion_tone`: The evaluated emotion tone of the input <br>
+`confidence_valu`: The probability of the evaluation <br>
+`confidence_percent`: Same as above but already calculated and rounded per cent
 
 ## The bot itself:
 
