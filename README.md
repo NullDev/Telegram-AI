@@ -47,6 +47,9 @@ Explanation: <br>
 `confidence_valu`: The probability of the evaluation <br>
 `confidence_percent`: Same as above but already calculated and rounded per cent
 
+**Disclaimer**: <br>
+This API provided by us (NullDev) is public, but comes with zero warrenty. We cannot ensure uptime. However, we still try to keep all of our API's online!
+
 ## The bot itself:
 
 <p align="center">
