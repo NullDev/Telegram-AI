@@ -5,7 +5,6 @@ let util = require('util');
 let http = require('http');
 let request = require('request');
 var fs = require('fs');
-//Ping
 var ms = require('jjg-ping');
 var process = require('process');
 process.on('uncaughtException', function(err) { console.error((err && err.stack) ? err.stack : err); });
@@ -122,7 +121,7 @@ bot.on('message', (msg) => {
 		if (typeof txt !== 'undefined' && txt != null) console.log('\nUSER ' +  from + ' MADE CHAT MESSAGE: ' + txt + "\n");
 		if (typeof txt === 'undefined' || txt == null) console.log('\nUSER ' +  from + ' MADE CHAT PICTURE: ' + _pic + "\n");
 		console.log(JSON.stringify(msg));
-		if (isDev == 1 && !(devs.indexOf(from.toString().toLowerCase()) > -1) && !(devs.indexOf(frID.toString()) > -1)){
+		if (isDev == 1 && !isaDev(from, frID)){
 			//bot.sendMessage(_id, "ID: " + frID + "\nName: " + name + "\nUser: " + from + "\nChatID: " + _id);
 			bot.sendMessage(_id, 
 				"Sorry, " + name + 
@@ -190,7 +189,7 @@ bot.on('message', (msg) => {
 				console.log('AIKIN REPLY: ' + _r + "\n");
 			}
 			if (cmd.toLowerCase() == "clearcache") {
-				if ((devs.indexOf(from.toString().toLowerCase()) > -1) || (devs.indexOf(frID.toString()) > -1)){
+				if (isaDev(from, frID)){
 					aikin_api.resetCache(function () { console.log("\n\n--- AIKIN RESET ---\n\n"); });
 					bot.sendMessage(_id, "AIKIN: Cache Cleared. I forgot everything...");
 				}
@@ -221,7 +220,7 @@ bot.on('message', (msg) => {
 				else evalEmo(_txt, _id);
 			}
 			if (cmd.toLowerCase() == "silent"){
-				if ((devs.indexOf(from.toString().toLowerCase()) > -1) || (devs.indexOf(frID.toString()) > -1)){
+				if (isaDev(from, frID)){
 					/* Temp remove
 					fs.readFile('silentmode', 'utf8', function (err, ls) {
 						if (err) console.log(err);
@@ -246,7 +245,7 @@ bot.on('message', (msg) => {
 					"\nUser name: "     + from                   +
 					"\nLanguage-Code: " + msg.from.language_code +
 					"\nID: "            + msg.from.id            +
-					"\nIs Dev: "        + (((devs.indexOf(from.toString().toLowerCase()) > -1) || (devs.indexOf(frID.toString()) > -1)) ? "Yes" : "No")
+					"\nIs Dev: "        + (isaDev(from, frID) ? "Yes" : "No")
 				);
 			}
 			if (cmd.toLowerCase() == "banner") {
