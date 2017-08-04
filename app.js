@@ -57,7 +57,8 @@ function descImg(url, id){
 				if (jsonraw.description != null && jsonraw.description != ''){
 					console.log(_s);
 					console.log('\nSIGHT GOT URI: ' + url + "\nSIGHT GOT DESC: \n" + body + "\n");
-					var res = "I think it\'s " + jsonraw.description.captions[0].text;
+					var _conf = Math.round(jsonraw.description.captions[0].confidence * 100);
+					var res = "I am " + _conf + "% sure that it\'s " + jsonraw.description.captions[0].text;
 					bot.sendMessage(id, res);
 					console.log('AIKIN REPLY: ' + res);
 				}
