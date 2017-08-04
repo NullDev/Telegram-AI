@@ -93,7 +93,7 @@ function evalEmo(_in, id){
 
 function isset(_var) { return ((_var && _var != null && _var != "" ) ? true : false); }
 function isaDev(_from, _id) { return ((devs.indexOf(_from.toString().toLowerCase()) > -1 || devs.indexOf(frID.toString()) > -1) ? true : false); }
-function isDenied(_from, _id) { return ((denylist.indexOf(from.toString().toLowerCase()) > -1 || denylist.indexOf(frID.toString().toLowerCase()) > -1) ? true : false); }
+function isDenied(_from, _id) { return ((denylist.indexOf(_from.toString().toLowerCase()) > -1 || denylist.indexOf(_id.toString().toLowerCase()) > -1) ? true : false); } }
 
 function isIdle(){ 
 	var _res;
