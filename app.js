@@ -1,6 +1,5 @@
 'use strict';
 const tg = require('node-telegram-bot-api');
-var aikin = require('nulldev-aikin');
 let util = require('util');
 let http = require('http');
 let request = require('request');
@@ -19,15 +18,14 @@ require.extensions['.json'] = function (module, filename) { module.exports = fs.
 var jsondata = require('./config.json'),
 	cfg      = JSON.parse(jsondata),
 	denylist = cfg.denylist,
-	token    = cfg.bot.token,
-	nltoken  = cfg.bot.nl_token,
-	nlsight  = cfg.bot.sight,
+	token    = cfg.bot.telegram_token,
+	nltoken  = cfg.bot.nulldev_token,
 	_n       = cfg.bot.botname,
+	rooturl  = cfg.bot.root,
 	isDev    = cfg.dev.devmode,
 	devs     = String.prototype.toLowerCase.apply(cfg.dev.devs).split(",");
+//var rooturl = "https://api.nulldev.org"
 console.log('\nLOADED JSON DATA:\n' + jsondata);
-var aikin_api = new aikin;
-aikin_api.set({ nlkey: nltoken });
 const bot = new tg(token, { polling: true });
 console.log(
 	'\n#-#-#-#-#-#-#-#-#-#-#'          +
@@ -39,39 +37,82 @@ console.log(
 	'\n\nListening...'
 );
 
-function descImg(url, id){
+function aikin(_in, id, debug){
 	var options = {
-		uri: 'https:\/\/api.nulldev.org\/sight-bot-ai.php',
-		method: 'POST',
-		body: '{\"url\":\"' + url + '\"}',
-		headers: {
-			'NL-Token': nlsight,
-			'Content-Type': 'application/json'
-		}
+		uri : rooturl + '/aikin?in=' + encodeURI(_in) + '&token=' + nltoken,
+		method : 'GET'
 	};
-	try{
-		request(options, function(error, response, body){
-			if (error) console.log(_err);
-			else {
-				var jsonraw = JSON.parse(body);
-				if (jsonraw.description != null && jsonraw.description != ''){
-					console.log(_s);
-					console.log('\nSIGHT GOT URI: ' + url + "\nSIGHT GOT DESC: \n" + body + "\n");
-					var _conf = Math.round(jsonraw.description.captions[0].confidence * 100);
-					var res = "I am " + _conf + "% sure that it\'s " + jsonraw.description.captions[0].text;
-					bot.sendMessage(id, res);
-					console.log('AIKIN REPLY: ' + res);
-				}
-				else console.log(_err);
+	request(options, function(error, response, body){
+		if (error) {
+			bot.sendMessage(id, "err");
+			console.log(error);
+		}
+		else {
+			console.log((debug ? "" : "\n") + "AIKIN: Got callback: \n" + body);
+			var ansParsed = JSON.parse(body);
+			if (!debug){
+				var _r = ansParsed.answer;
+				bot.sendMessage(id, _r);
+				console.log('\nAIKIN REPLY: ' + _r);
 			}
+			else {
+				var _r = "Answer: \""           + ansParsed.answer + "\"" +
+						 "\nConfidence: "       + ansParsed.confidence + 
+						 "\nInteractions: "     + ansParsed.interaction_count + 
+						 "\nCalculation Time: " + ansParsed.calculation_time +
+						 "\nRandom Number: "    + ansParsed.random_integer;
+				bot.sendMessage(id, _r);
+				console.log('\nAIKIN REPLY: ' + _r);
+			}
+		}
+	});
+}
+
+function resetAikin(hardreset, callback){
+	var getInteractions = {
+		uri : rooturl + '/aikin?in=null&token=' + nltoken,
+		method : 'GET'
+	};
+	var options = {
+		uri : rooturl + '/aikin?in=null&reset=1&token=' + nltoken,
+		method : 'GET'
+	};
+	if (hardreset) {
+		request(getInteractions, function(error, response, body){
+			var resetParsed = JSON.parse(body);
+			var interactions = resetParsed.interaction_count - 1;
+			request(options, function(error, response, body){
+				console.log("AIKIN: Got callback: \n" + body);
+				console.log('\nAIKIN: -- Cache Clear --');
+				callback(interactions);
+			});
 		});
 	}
-	catch(err){ console.log(err); }
+}
+
+function desc(_in, id){
+	var options = {
+		uri : rooturl + '/aikin?pic=' + encodeURI(_in) + '&token=' + nltoken,
+		method : 'GET'
+	};
+	request(options, function(error, response, body){
+		if (error) {
+			bot.sendMessage(id, "err");
+			console.log(error);
+		}
+		else {
+			console.log("AIKIN: Got callback: \n" + body);
+			var evalParsed = JSON.parse(body);
+			var _r = "I am " + evalParsed.confidence_percent + " sure that it\'s " + evalParsed.eval;
+			bot.sendMessage(id, _r);
+			console.log('\nAIKIN REPLY: ' + _r);
+		}
+	});
 }
 
 function evalEmo(_in, id){
 	var options = {
-		uri : 'https://api.nulldev.org/emo?text=' + encodeURI(_in),
+		uri : rooturl + '/emo?text=' + encodeURI(_in),
 		method : 'GET'
 	};
 	request(options, function(error, response, body){
@@ -94,15 +135,6 @@ function evalEmo(_in, id){
 function isset(_var) { return ((_var && _var != null && _var != "" ) ? true : false); }
 function isaDev(_from, _id) { return ((devs.indexOf(_from.toString().toLowerCase()) > -1 || devs.indexOf(_id.toString()) > -1) ? true : false); }
 function isDenied(_from, _id) { return ((denylist.indexOf(_from.toString().toLowerCase()) > -1 || denylist.indexOf(_id.toString().toLowerCase()) > -1) ? true : false); }
-
-function isIdle(){ 
-	var _res;
-	fs.readFile('silentmode', 'utf8', function (err, ls) { 
-		if (err) console.log(err);
-		_res = ls.toString().includes('1') ? true : false;
-	});
-	return _res; 
-}
 
 bot.on('message', (msg) => {
 	var txt   = msg.text;
@@ -156,45 +188,30 @@ bot.on('message', (msg) => {
 					console.log('\nGOT PATH: ' + _p);
 					var uri = "https:\/\/api.telegram.org\/file\/bot" + token + "\/" + _p;
 					console.log('GOT URI: ' + uri);
-					descImg(uri, _id);
-
+					desc(uri, _id);
 				});
 			}
 			catch(err){ return; }
 		}
 		else if (txt.indexOf('!-- ') === 0){
-			var cmd = txt.slice('!-- '.length), uri1 = "http://core.telegram.com", uri2 = "http://nulldev.org";
+			var cmd = txt.slice('!-- '.length);
 			console.log('\nUSER ' + from + ' PERFORMED COMMAND: ' + cmd + '\n');
-			//Callback hell...
 			if (cmd.toLowerCase() == "status") {
-				aikin.prepare(function(){
-					aikin_api.write("test", function (_c) {
-						ms.system.ping(uri1, function(l1, s1) {
-							ms.system.ping(uri2, function(l2, s2) {
-								bot.sendMessage(_id, 
-									"AIKIN Health Status: " + 
-									((typeof _c === 'undefined' || _c == null) ? "Dead" : "Healthy") +
-									"\nTelegram API Status: Online (Ping: " + l1 + ")" +
-									"\nNullDev Backend: Online (Ping: " + l2 + ")" +
-									"\nIn Devmode: " + ((isDev == 1) ? "Yes" : "No") +
-									"\nMain Developer: @NullPing" +
-									"\nUsers marked as Devs: " + devs.toString()
-								);
-							});
-						});
-					});
-				});
+				bot.sendMessage(_id, 
+					"AIKIN Health Status: " +
+					"\n--- Telegram API: Online" +
+					"\n--- In Devmode: " + ((isDev == 1) ? "Yes" : "No") +
+					"\n--- Main Developer: @NullPing" +
+					"\n--- Users marked as Devs: " + devs.toString()
+				);
 			}
 			if (cmd.toLowerCase() == "help") {
-				var _r = "Commands:\n\n !-- status\n !-- git\n !-- ping\n !-- emo\n !-- silent\n !-- banner\n !-- whoami\n !-- help";
+				var _r = "Commands:\n\n !-- status\n !-- git\n !-- debug\n !-- ping\n !-- clearcache\n !-- emo\n !-- silent\n !-- banner\n !-- whoami\n !-- help";
 				bot.sendMessage(_id, _r);
 				console.log('AIKIN REPLY: ' + _r + "\n");
 			}
-			if (cmd.toLowerCase() == "clearcache") {
-				if (isaDev(from, frID)){
-					aikin_api.resetCache(function () { console.log("\n\n--- AIKIN RESET ---\n\n"); });
-					bot.sendMessage(_id, "AIKIN: Cache Cleared. I forgot everything...");
-				}
+			if (cmd.toLowerCase() == "clearcache") { 
+				if (isaDev(from, frID)){ resetAikin(true, function(x){ bot.sendMessage(_id, "AIKIN: Cache Cleared.\nTotal Interactions before clear: " + x); }); }
 				else bot.sendMessage(_id, "AIKIN: Insufficient permissions...");
 			}
 			if (cmd.toLowerCase() == "git") {
@@ -221,25 +238,14 @@ bot.on('message', (msg) => {
 				}
 				else evalEmo(_txt, _id);
 			}
-			if (cmd.toLowerCase() == "silent"){
-				if (isaDev(from, frID)){
-					/* Temp remove
-					fs.readFile('silentmode', 'utf8', function (err, ls) {
-						if (err) console.log(err);
-						if (ls.toString().includes('0')) {
-							fs.writeFile('silentmode', '1', function (err) { if (err) return console.log(err); });
-							bot.sendMessage(_id, "AIKIN: In silent mode now");
-							console.log("AIKIN: SILENT MODE ON");
-						}
-						else {
-							fs.writeFile('silentmode', '0', function (err) { if (err) return console.log(err); });
-							bot.sendMessage(_id, "AIKIN: Not in silent mode anymore");
-							console.log("AIKIN: SILENT MODE OFF");
-						}
-					});
-					*/ 
+			if (cmd.toLowerCase().indexOf("debug") === 0) {
+				var _txt = cmd.slice('debug '.length);
+				if (_txt == ""){
+					var _r = "AIKIN: Usage: !-- debug your text";
+					bot.sendMessage(_id, _r);
+					console.log('\nAIKIN REPLY: ' + _r + "\n");
 				}
-				else bot.sendMessage(_id, "AIKIN: Insufficient permissions...");
+				else aikin(_txt, _id, true);
 			}
 			if (cmd.toLowerCase() == "whoami") {
 				bot.sendMessage(_id, 
@@ -309,16 +315,6 @@ bot.on('message', (msg) => {
 			console.log(_s);
 			console.log('\nAIKIN REPLY: ' + ans + "\n");
 		}
-		else {
-			//AIKIN Package calls API Endpoint
-			aikin.wrap(function(){
-				aikin_api.ask(txt, function (callback) {
-					bot.sendMessage(_id, callback.message);
-					console.log(_s);
-					console.log('\nAIKIN REPLY: ' + callback.message + "\n");
-					console.log(JSON.stringify(callback));
-				});
-			});
-		}
+		else aikin(txt, _id, false);
 	}
 });
