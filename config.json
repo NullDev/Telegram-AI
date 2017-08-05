@@ -1,13 +1,13 @@
 {
-   "bot": {
-      "token": "TELEGRAM-TOKEN-CENSORED",
-      "nl_token": "NULLDEV-TOKEN-CENSORED",
-      "sight": "NULLDEV-SIGHTBOT-TOKEN-CENSORED",
-      "botname": "AIKIN_bot"
-   },
-   "dev": {
-      "devmode": "0",
-      "devs": ["nullping","314919386"]
-   },   
-   "denylist": []
+	"bot": {
+		"telegram_token": "-- CENSORED --",
+		"nulldev_token": "-- CENSORED --",
+		"botname": "AIKIN_bot",
+		"root": "https://api.nulldev.org"
+	},
+	"dev": {
+		"devmode": "0",
+		"devs": ["nullping","314919386"]
+	},
+	"denylist": []
 }
