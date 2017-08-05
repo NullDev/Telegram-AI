@@ -112,7 +112,11 @@ If you want to use this telegram bot with your own API, you need to replace `htt
 <p align="center">
 <br>
 <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike> The Bot in Action <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike><br><br>
+<p>Aikin Chat</p>
 <img src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s1.png" /><br>
+<p>Aikin Image Recognition</p>
 <img src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s5.png" /><br>
+<p>Aikin Emotion Evaluation & Debug</p>
+<img src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s9.png" /><br>
 <br>
 </p>
