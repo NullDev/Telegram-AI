@@ -87,50 +87,27 @@ This API provided by us (NullDev) is public, but comes with zero warrenty. We ca
 - Status Informations
 - Developer Info
 - WhoAmI Information
-- <s>Offline mode (console only; no telegram output)</s>
-- This is "silentmode" now
 - Emotion Recognition as mentioned above
+- Debug informations 
+- Other commands
+- AI Cache clear
 
 ## Developer Info:
 
-The bot used to call the NullDev AIKIN API Endpoint like 
+The bot calls our Aikin API endpoint like this:
 
 ```javascript
 var options = {
-  uri: "https:\/\/api.nulldev.org\/aikin.php",
-  method: 'POST',
-  body: '{\"input\":\"' + txt + '\"}',
-  headers: {
-    'nulldev-token': nl_token,
-    'Content-Type': 'application/json',
-  }
+	uri : 'https://api.nulldev.org/aikin?object=value',
+	method : 'GET'
 };
-try{
-  request(options, function(error, response, body){
-    var jsonraw = JSON.parse(body);
-    bot.sendMessage(_id, jsonraw.reply);
-    console.log('\nUSER CHAT REPLY: ' + jsonraw.reply + "\n");
-  });
-}
-catch(err){ return; }
-```
-
-Which is not the case anymore. AIKIN is a **private** Library now used like:
-
-```javascript
-var aikin = require('nulldev-aikin');
-var aikin_api = new aikin;
-aikin_api.set({ nlkey: nltoken });
-aikin.wrap(function(){
-  aikin_api.ask(txt, function (callback) {
-    bot.sendMessage(_id, callback.message);
-    console.log('\nAIKIN REPLY: ' + callback.message + "\n");
-    console.log(JSON.stringify(callback));
-  });
+request(options, function(error, response, body){
+	var ansParsed = JSON.parse(body);
+	var _r = ansParsed.object; //Accessing objects of ansParsed
+	bot.sendMessage(id, _r);
 });
 ```
-
-So, If you want to use this telegram client for your own API you need to use the old code from above to connect to your endpoint, replacing `https:\/\/api.nulldev.org\/aikin.php` with the URI of your API and change the callbacks. Also the Sightbot integration wont work as well since `https:\/\/api.nulldev.org\/sight-bot-ai.php` is locked down too.
+If you want to use this telegram bot with your own API, you need to replace `https://api.nulldev.org/aikin?object=value` with whater your endpoint is. 
 
 <p align="center">
 <br>
