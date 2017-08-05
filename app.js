@@ -101,7 +101,7 @@ function desc(_in, id){
 			console.log(error);
 		}
 		else {
-			console.log("AIKIN: Got callback: \n" + body);
+			console.log("\nAIKIN: Got callback: \n" + body);
 			var evalParsed = JSON.parse(body);
 			var _r = "I am " + evalParsed.confidence_percent + " sure that it\'s " + evalParsed.eval;
 			bot.sendMessage(id, _r);
