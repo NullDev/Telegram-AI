@@ -63,6 +63,7 @@ This API provided by us (NullDev) is public, but comes with zero warrenty. We ca
 <br>
 </p>
 
+**More screenshots here:** <a href="https://github.com/NLDev/Telegram-AI/blob/master/SHOWCASE.md">SHOWCASE</a>
 
 <p align="center">
 <br>
