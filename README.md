@@ -34,18 +34,11 @@ Callback: <br>
     "error":0,
     "given_text":"I am fine",
     "emotion_tone":"positive",
-    "confidence_value":0.6998420293874229,
-    "confidence_percent":"69.98%",
+    "probability_value":0.6998420293874229,
+    "probability_percent":"69.98%",
     "copyright":"NullDev"
 }
 ```
-
-Explanation: <br>
-`error`: 0 = No error; 1 = Error, see "`message`" <br>
-`given_text`: The input <br>
-`emotion_tone`: The evaluated emotion tone of the input <br>
-`confidence_value`: The probability of the evaluation <br>
-`confidence_percent`: Same as above but already calculated and rounded per cent
 
 <hr>
 
