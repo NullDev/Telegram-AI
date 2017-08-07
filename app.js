@@ -124,8 +124,8 @@ function evalEmo(_in, id){
 			console.log("AIKIN: Got callback: " + body);
 			var emoParsed = JSON.parse(body);
 			var _r = "Emotion Tone: " + emoParsed.emotion_tone + 
-					 "\nConfidence (Value): " + emoParsed.confidence_value + 
-					 "\nConfidence (in %): " + emoParsed.confidence_percent;
+					 "\nProbability (Value): " + emoParsed.probability_value + 
+					 "\nProbability (in %): " + emoParsed.probability_percent;
 			bot.sendMessage(id, _r);
 			console.log('\nAIKIN REPLY: ' + _r);
 		}
