@@ -44,8 +44,15 @@ Explanation: <br>
 `error`: 0 = No error; 1 = Error, see "`message`" <br>
 `given_text`: The input <br>
 `emotion_tone`: The evaluated emotion tone of the input <br>
-`confidence_valu`: The probability of the evaluation <br>
+`confidence_value`: The probability of the evaluation <br>
 `confidence_percent`: Same as above but already calculated and rounded per cent
+
+<hr>
+
+### Please refere here for a full API documentation: <br>
+https://github.com/NullDevCo/Emotion-Evaluation-API
+
+<hr>
 
 **Disclaimer**: <br>
 This API provided by us (NullDev) is public, but comes with zero warrenty. We cannot ensure uptime. However, we still try to keep all of our API's online!
