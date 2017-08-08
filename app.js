@@ -4,7 +4,6 @@ let util = require('util');
 let http = require('http');
 let request = require('request');
 var fs = require('fs');
-var ms = require('jjg-ping');
 var process = require('process');
 process.on('uncaughtException', function(err) { console.error((err && err.stack) ? err.stack : err); });
 console.log(
