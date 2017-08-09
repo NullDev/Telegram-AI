@@ -31,14 +31,14 @@ console.log(
 	'\n#-------------------#'          +
 	'\n# AIKIN BOT STARTED #'          +
 	'\n#-------------------#'          +
-	'\n#-#-#-#-#-#-#-#-#-#-#\n\n'      + 
+	'\n#-#-#-#-#-#-#-#-#-#-#\n\n'      +
 	'-- Copyright (c) 2017 NullDev --' +
 	'\n\nListening...'
 );
 
-function aikin(_in, id, debug){
+function aikin(_in, id, uid, debug){
 	var options = {
-		uri : rooturl + '/aikin?in=' + encodeURI(_in) + '&token=' + nltoken,
+		uri : rooturl + '/aikin?in=' + encodeURI(_in) + '&token=' + nltoken + '&userid=' + uid,
 		method : 'GET'
 	};
 	request(options, function(error, response, body){
@@ -205,7 +205,7 @@ bot.on('message', (msg) => {
 				);
 			}
 			if (cmd.toLowerCase() == "help") {
-				var _r = "Commands:\n\n !-- status\n !-- git\n !-- debug\n !-- ping\n !-- clearcache\n !-- emo\n !-- silent\n !-- banner\n !-- whoami\n !-- help";
+				var _r = "AIKIN: Commands:\n\n !-- status\n !-- git\n !-- debug\n !-- ping\n !-- clearcache\n !-- emo\n !-- silent\n !-- banner\n !-- whoami\n !-- help";
 				bot.sendMessage(_id, _r);
 				console.log('AIKIN REPLY: ' + _r + "\n");
 			}
@@ -244,7 +244,7 @@ bot.on('message', (msg) => {
 					bot.sendMessage(_id, _r);
 					console.log('\nAIKIN REPLY: ' + _r + "\n");
 				}
-				else aikin(_txt, _id, true);
+				else aikin(_txt, _id, frID, true);
 			}
 			if (cmd.toLowerCase() == "whoami") {
 				bot.sendMessage(_id, 
@@ -264,6 +264,11 @@ bot.on('message', (msg) => {
 					console.log(err);
 					console.log(msg);
 				});
+			}
+			else {
+				var _r = "AIKIN: Unknown command. Please use !-- help for a list of commands.";
+				bot.sendMessage(_id, _r);
+				console.log('AIKIN REPLY: ' + _r + "\n");
 			}
 		}
 		//First message
@@ -314,6 +319,6 @@ bot.on('message', (msg) => {
 			console.log(_s);
 			console.log('\nAIKIN REPLY: ' + ans + "\n");
 		}
-		else aikin(txt, _id, false);
+		else aikin(txt, _id, frID, false);
 	}
 });
