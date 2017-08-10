@@ -4,8 +4,7 @@
 	"version": "1.3.0",
 	"main": "app.js",
 	"scripts": {
-		"start": "node app.js",
-		"debug": "node app.js --debug"
+		"start": "node app.js"
 	},
 	"dependencies": {
 		"node-telegram-bot-api": "^0.27.0"
