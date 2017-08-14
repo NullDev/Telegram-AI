@@ -23,7 +23,7 @@ var jsondata = require('./config.json'),
 	rooturl  = cfg.bot.root,
 	isDev    = cfg.dev.devmode,
 	devs     = String.prototype.toLowerCase.apply(cfg.dev.devs).split(",");
-//var rooturl = "https://api.nulldev.org"
+//var rooturl = "https://api.nulldev.org" <-- In config.json 
 console.log('\nLOADED JSON DATA:\n' + jsondata);
 const bot = new tg(token, { polling: true });
 console.log(
@@ -73,7 +73,7 @@ function resetAikin(hardreset, callback){
 		method : 'GET'
 	};
 	var options = {
-		uri : rooturl + '/aikin?in=null&reset=1&token=' + nltoken,
+		uri : rooturl + '/aikin?in=null&reset=1&token=' + nltoken + "&userid=null",
 		method : 'GET'
 	};
 	if (hardreset) {
