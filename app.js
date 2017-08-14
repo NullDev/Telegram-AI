@@ -5,6 +5,13 @@ let http = require('http');
 let request = require('request');
 var fs = require('fs');
 var process = require('process');
+
+////////////////////////////////
+//----------------------------//
+// Copyright (c) 2017 NullDev //
+//----------------------------//
+////////////////////////////////
+
 process.on('uncaughtException', function(err) { console.error((err && err.stack) ? err.stack : err); });
 console.log(
 	'\n\n\n'                          +
