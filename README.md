@@ -48,7 +48,7 @@ https://github.com/NullDevCo/Emotion-Evaluation-API
 <hr>
 
 **Disclaimer**: <br>
-This API provided by us (NullDev) is public, but comes with zero warrenty. We cannot ensure uptime. However, we still try to keep all of our API's online!
+This API provided by us (NullDev) is public, but comes with zero warrenty. We cannot ensure uptime. However, we still try to keep all of our API's online! Also, there is no guarantee that the computed output is correct. 
 
 ## The bot itself:
 
