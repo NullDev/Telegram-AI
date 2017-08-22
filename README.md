@@ -12,6 +12,10 @@ The name A.I.K.I.N. stands for `Artificial Intelligence Knowlege Input Notation`
 You can chat with it right away! <br>
 Just message @aikin_bot or click this link: <a href="http://t.me/aikin_bot">t.me/aikin_bot</a>
 
+## Whats the technology behind Aikin?
+
+Aikin is a deep machine learning artificial intelligence based on a RNN (recurrent neural network) with LSTM (Long short-term memory).
+
 ## Also:
 The bot has an included image recognition feature. <br>
 Just send a Picture and let AIKIN describe it! 
