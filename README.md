@@ -24,7 +24,7 @@ Just send a Picture and let AIKIN describe it!
 
 ## NOTE:
 
-This is only the bot (client) and **NOT** the AI itself. 
+This is only the bot (client) and **NOT** the AI itself. <br>
 
 However, our Emotion Tone recognition API is open to everyone!
 
@@ -53,6 +53,18 @@ https://github.com/NullDevCo/Emotion-Evaluation-API
 
 **Disclaimer**: <br>
 This API provided by us (NullDev) is public, but comes with zero warrenty. We cannot ensure uptime. However, we still try to keep all of our API's online! Also, there is no guarantee that the computed output is correct. 
+
+## Aikin Clients
+Telegram AI is not the only client for AIKIN. 
+
+Full list of open source clients: 
+
+| Platform | Repository |
+|----------|------------|
+| Telegram | <a href="https://github.com/NLDev/Telegram-AI">Telegram AI</a>   |
+| Slack    | <a href="https://github.com/NLDev/Slack-Bot-AI">Slack Bot AI</a> |
+| IRC      | Under Construction                                               |
+| Kik      | Under Construction                                               |
 
 ## The bot itself:
 
