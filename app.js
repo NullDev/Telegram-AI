@@ -74,13 +74,13 @@ function aikin(_in, id, uid, debug){
 	});
 }
 
-function resetAikin(hardreset, callback){
+function resetAikin(hardreset, uid, callback){
 	var getInteractions = {
-		uri : rooturl + '/aikin?in=null&token=' + nltoken,
+		uri : rooturl + '/aikin?in=null&token=' + nltoken + '&userid=' + uid,
 		method : 'GET'
 	};
 	var options = {
-		uri : rooturl + '/aikin?in=null&reset=1&token=' + nltoken + "&userid=null",
+		uri : rooturl + '/aikin?in=null&reset=1&token=' + nltoken + '&userid=' + uid,
 		method : 'GET'
 	};
 	if (hardreset) {
@@ -216,16 +216,16 @@ bot.on('message', (msg) => {
 				bot.sendMessage(_id, _r);
 				console.log('AIKIN REPLY: ' + _r + "\n");
 			}
-			if (cmd.toLowerCase() == "clearcache") { 
-				if (isaDev(from, frID)){ resetAikin(true, function(x){ bot.sendMessage(_id, "AIKIN: Cache Cleared.\nTotal Interactions before clear: " + x); }); }
+			else if (cmd.toLowerCase() == "clearcache") { 
+				if (isaDev(from, frID)){ resetAikin(true, frID, function(x){ bot.sendMessage(_id, "AIKIN: Cache Cleared.\nTotal Interactions before clear: " + x); }); }
 				else bot.sendMessage(_id, "AIKIN: Insufficient permissions...");
 			}
-			if (cmd.toLowerCase() == "git") {
+			else if (cmd.toLowerCase() == "git") {
 				var _r = "The bot (client) is open source! :)\nGrab the code here:\n\nhttps://github.com/NLDev/Telegram-AI";
 				bot.sendMessage(_id, _r);
 				console.log('AIKIN REPLY: ' + _r + "\n");
 			}
-			if (cmd.toLowerCase() == "ping") {
+			else if (cmd.toLowerCase() == "ping") {
 				var startTime = new Date();
 				var _r = "Pong!";
 				bot.sendMessage(_id, _r);
@@ -235,7 +235,7 @@ bot.on('message', (msg) => {
 				bot.sendMessage(_id, _r2);
 				console.log('AIKIN REPLY: ' + _r2 + "\n");
 			}
-			if (cmd.toLowerCase().indexOf("emo") === 0) {
+			else if (cmd.toLowerCase().indexOf("emo") === 0) {
 				var _txt = cmd.slice('emo '.length);
 				if (_txt == ""){
 					var _r = "AIKIN: Usage: !-- emo your text";
@@ -244,7 +244,7 @@ bot.on('message', (msg) => {
 				}
 				else evalEmo(_txt, _id);
 			}
-			if (cmd.toLowerCase().indexOf("debug") === 0) {
+			else if (cmd.toLowerCase().indexOf("debug") === 0) {
 				var _txt = cmd.slice('debug '.length);
 				if (_txt == ""){
 					var _r = "AIKIN: Usage: !-- debug your text";
@@ -253,7 +253,7 @@ bot.on('message', (msg) => {
 				}
 				else aikin(_txt, _id, frID, true);
 			}
-			if (cmd.toLowerCase() == "whoami") {
+			else if (cmd.toLowerCase() == "whoami") {
 				bot.sendMessage(_id, 
 					"First Name: "      + msg.chat.first_name    + 
 					"\nUser name: "     + from                   +
@@ -262,7 +262,7 @@ bot.on('message', (msg) => {
 					"\nIs Dev: "        + (isaDev(from, frID) ? "Yes" : "No")
 				);
 			}
-			if (cmd.toLowerCase() == "banner") {
+			else if (cmd.toLowerCase() == "banner") {
 				bot.sendPhoto({
 					chatId: _id,
 					caption: 'AIKIN Banner',
