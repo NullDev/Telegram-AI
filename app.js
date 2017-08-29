@@ -237,7 +237,7 @@ bot.on('message', (msg) => {
 			}
 			else if (cmd.toLowerCase().indexOf("emo") === 0) {
 				var _txt = cmd.slice('emo '.length);
-				if (_txt == ""){
+				if (_txt.replace(/\s/gi, "") == ""){
 					var _r = "AIKIN: Usage: !-- emo your text";
 					bot.sendMessage(_id, _r);
 					console.log('\nAIKIN REPLY: ' + _r + "\n");
@@ -246,7 +246,7 @@ bot.on('message', (msg) => {
 			}
 			else if (cmd.toLowerCase().indexOf("debug") === 0) {
 				var _txt = cmd.slice('debug '.length);
-				if (_txt == ""){
+				if (_txt.replace(/\s/gi, "") == ""){
 					var _r = "AIKIN: Usage: !-- debug your text";
 					bot.sendMessage(_id, _r);
 					console.log('\nAIKIN REPLY: ' + _r + "\n");
