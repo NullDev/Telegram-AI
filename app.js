@@ -211,7 +211,7 @@ bot.on('message', (msg) => {
 					"\n--- Users marked as Devs: " + devs.toString()
 				);
 			}
-			if (cmd.toLowerCase() == "help") {
+			else if (cmd.toLowerCase() == "help") {
 				var _r = "AIKIN: Commands:\n\n !-- status\n !-- git\n !-- debug\n !-- ping\n !-- clearcache\n !-- emo\n !-- silent\n !-- banner\n !-- whoami\n !-- help";
 				bot.sendMessage(_id, _r);
 				console.log('AIKIN REPLY: ' + _r + "\n");
