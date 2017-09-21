@@ -14,7 +14,7 @@ Just message @aikin_bot or click this link: <a href="http://t.me/aikin_bot">t.me
 
 ## Whats the technology behind Aikin?
 
-Aikin is a deep machine learning artificial intelligence based on a RNN (recurrent neural network) with LSTM (Long short-term memory).
+Aikin is a deep machine learning artificial intelligence based on a RNN (recurrent neural network) with LSTM (Long short-term memory) for chat and a ConvNet (Convolutional Neural Network) for image processing.
 
 ## Also:
 The bot has an included image recognition feature. <br>
