@@ -116,6 +116,15 @@ function desc(_in, id){
 	});
 }
 
+function isURL(str) {
+	var pattern = new RegExp(
+		'^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + 
+		'((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+&:]*)*' + 
+		'(\\?[;&a-z\\d%_.,~+&:=-]*)?(\\#[-a-z\\d_]*)?$','i'
+	);
+	return pattern.test(str);
+}
+
 function evalEmo(_in, id){
 	var options = {
 		uri : rooturl + '/emo?text=' + encodeURI(_in),
@@ -144,7 +153,6 @@ function isDenied(_from, _id) { return ((denylist.indexOf(_from.toString().toLow
 
 bot.on('message', (msg) => {
 	var txt   = msg.text;
-	txt = isset(txt) ? txt.replace(/\//gi, "") : txt;
 	var from  = msg.chat.username;
 	var frID  = msg.from.id;
 	//Username could be non-existant
@@ -212,7 +220,7 @@ bot.on('message', (msg) => {
 				);
 			}
 			else if (cmd.toLowerCase() == "help") {
-				var _r = "AIKIN: Commands:\n\n !-- status\n !-- git\n !-- debug\n !-- ping\n !-- clearcache\n !-- emo\n !-- silent\n !-- banner\n !-- whoami\n !-- help";
+				var _r = "AIKIN: Commands:\n\n !-- status\n !-- git\n !-- debug\n !-- ping\n !-- clearcache\n !-- emo\n !-- silent\n !-- banner\n !-- whoami\n !-- pic\n !-- help";
 				bot.sendMessage(_id, _r);
 				console.log('AIKIN REPLY: ' + _r + "\n");
 			}
@@ -261,6 +269,20 @@ bot.on('message', (msg) => {
 					"\nID: "            + msg.from.id            +
 					"\nIs Dev: "        + (isaDev(from, frID) ? "Yes" : "No")
 				);
+			}
+			else if (cmd.toLowerCase().indexOf("pic") === 0) {
+				var _url = cmd.slice('pic '.length);
+				if (_url.replace(/\s/gi, "") == ""){
+					var _r = "AIKIN: Usage: !-- pic link";
+					bot.sendMessage(_id, _r);
+					console.log('\nAIKIN REPLY: ' + _r + "\n");
+				}
+				else if (isURL(_url)) desc(_url, _id);
+				else {
+					var _r = "AIKIN: This URL seems to be invalid";
+					bot.sendMessage(_id, _r);
+					console.log('\nAIKIN REPLY: ' + _r + "\n");
+				}
 			}
 			else if (cmd.toLowerCase() == "banner") {
 				bot.sendPhoto({
