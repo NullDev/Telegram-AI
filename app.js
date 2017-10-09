@@ -109,9 +109,16 @@ function desc(_in, id){
 		else {
 			console.log("\nAIKIN: Got callback: \n" + body);
 			var evalParsed = JSON.parse(body);
-			var _r = "I am " + evalParsed.confidence_percent + " sure that it\'s " + evalParsed.eval;
-			bot.sendMessage(id, _r);
-			console.log('\nAIKIN REPLY: ' + _r);
+			if (evalParsed.error == 1){
+				var _r = "Error: This image appears to be invalid!";
+				bot.sendMessage(id, _r);
+				console.log('\nAIKIN REPLY: ' + _r);
+			}
+			else {
+				var _r = "I am " + evalParsed.confidence_percent + " sure that it\'s " + evalParsed.eval;
+				bot.sendMessage(id, _r);
+				console.log('\nAIKIN REPLY: ' + _r);
+			}
 		}
 	});
 }
