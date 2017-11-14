@@ -28,6 +28,7 @@ var jsondata = require('./config.json'),
 	nltoken  = cfg.bot.nulldev_token,
 	_n       = cfg.bot.botname,
 	rooturl  = cfg.bot.root,
+	typo     = cfg.bot.typo_percentage,
 	isDev    = cfg.dev.devmode,
 	devs     = String.prototype.toLowerCase.apply(cfg.dev.devs).split(",");
 //var rooturl = "https://api.nulldev.org" <-- In config.json 
@@ -43,6 +44,16 @@ console.log(
 	'\n\nListening...'
 );
 
+function replaceRandom(str){
+	var amount = 1;
+    for(var i = 0; i < amount; i++)    {
+        var max = str.length - 1;
+        var pos = Math.round(Math.random() * max);
+        str = str.slice(0, pos) + str.slice(pos + 1);
+    }
+    return str;
+}
+
 function aikin(_in, id, uid, debug){
 	var options = {
 		uri : rooturl + '/aikin?in=' + encodeURI(_in) + '&token=' + nltoken + '&userid=' + uid,
@@ -55,16 +66,34 @@ function aikin(_in, id, uid, debug){
 		}
 		else {
 			console.log((debug ? "" : "\n") + "AIKIN: Got callback: \n" + body);
+			var typoLikely = typo / 100;
 			var ansParsed = JSON.parse(body);
+			var d = Math.random();
+			var hasTypo = ((d < typoLikely) ? true : false);
 			if (!debug){
 				var _r = ansParsed.answer;
-				bot.sendMessage(id, _r);
+				if (!hasTypo) bot.sendMessage(id, _r);
+				else {
+					var words = _r.split(" ");
+					var word = null;
+					
+					do { word  = words[Math.floor(Math.random() * words.length)]; }
+					while(word != null && !isNaN(word) && words.length > 1);
+
+					var newword = replaceRandom(word);
+					var newmsg  = _r.replace(word, newword);
+
+					bot.sendMessage(id, newmsg);
+
+					setTimeout(function(){ bot.sendMessage(id, "*" + word); }, 2000);
+				}
 				console.log('\nAIKIN REPLY: ' + _r);
 			}
 			else {
 				var _r = "Answer: \""           + ansParsed.answer + "\"" +
 						 "\nConfidence: "       + ansParsed.confidence + 
 						 "\nInteractions: "     + ansParsed.interaction_count + 
+						 "\nHas Typo: "         + hasTypo +
 						 "\nCalculation Time: " + ansParsed.calculation_time +
 						 "\nRandom Number: "    + ansParsed.random_integer;
 				bot.sendMessage(id, _r);
@@ -176,7 +205,7 @@ bot.on('message', (msg) => {
 		if (typeof txt !== 'undefined' && txt != null) console.log('\nUSER ' +  from + ' MADE CHAT MESSAGE: ' + txt + "\n");
 		if (typeof txt === 'undefined' || txt == null) console.log('\nUSER ' +  from + ' MADE CHAT PICTURE: ' + _pic + "\n");
 		console.log(JSON.stringify(msg));
-		if (isDev == 1 && !isaDev(from, frID)){
+		if (isDev == 1 && !isaDev(from, frID) && txt.toLowerCase() != "!-- whoami"){
 			//bot.sendMessage(_id, "ID: " + frID + "\nName: " + name + "\nUser: " + from + "\nChatID: " + _id);
 			bot.sendMessage(_id, 
 				"Sorry, " + name + 
