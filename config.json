@@ -3,7 +3,8 @@
 		"telegram_token": "-- CENSORED --",
 		"nulldev_token": "-- CENSORED --",
 		"botname": "AIKIN_bot",
-		"root": "https://api.nulldev.org"
+		"root": "https://api.nulldev.org",
+		"typo_percentage": 40
 	},
 	"dev": {
 		"devmode": "0",
