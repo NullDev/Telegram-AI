@@ -95,6 +95,7 @@ Full list of open source clients:
 ## Bot Features:
 
 - Normal Chat
+- Intentional typos with fix in next message (+ percentage)
 - Natural Language Processing
 - Long term memory
 - Image recognition
