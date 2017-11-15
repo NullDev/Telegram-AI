@@ -29,6 +29,7 @@ var jsondata = require('./config.json'),
 	_n       = cfg.bot.botname,
 	rooturl  = cfg.bot.root,
 	typo     = cfg.bot.typo_percentage,
+	typodel  = cfg.bot.typo_response_delay,
 	isDev    = cfg.dev.devmode,
 	devs     = String.prototype.toLowerCase.apply(cfg.dev.devs).split(",");
 //var rooturl = "https://api.nulldev.org" <-- In config.json 
@@ -85,7 +86,7 @@ function aikin(_in, id, uid, debug){
 
 					bot.sendMessage(id, newmsg);
 
-					setTimeout(function(){ bot.sendMessage(id, "*" + word); }, 2000);
+					setTimeout(function(){ bot.sendMessage(id, "*" + word); }, typodel);
 				}
 				console.log('\nAIKIN REPLY: ' + _r);
 			}
