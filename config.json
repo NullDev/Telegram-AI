@@ -4,7 +4,8 @@
 		"nulldev_token": "-- CENSORED --",
 		"botname": "AIKIN_bot",
 		"root": "https://api.nulldev.org",
-		"typo_percentage": 40
+		"typo_percentage": 40,
+		"typo_response_delay": 1500
 	},
 	"dev": {
 		"devmode": "0",
