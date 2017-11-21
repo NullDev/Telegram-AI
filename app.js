@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 const tg = require('node-telegram-bot-api');
 let util = require('util');
 let http = require('http');
@@ -55,9 +55,11 @@ function replaceRandom(str){
     return str;
 }
 
-function aikin(_in, id, uid, debug){
+function aikin(_in, id, uid, debug, un){
+	var uname = (isset(un) ? un : "Unknown");
+
 	var options = {
-		uri : rooturl + '/aikin?in=' + encodeURI(_in) + '&token=' + nltoken + '&userid=' + uid,
+		uri : rooturl + '/aikin?in=' + encodeURI(_in) + '&token=' + nltoken + '&userid=' + uid + "&username=" + uname,
 		method : 'GET'
 	};
 	request(options, function(error, response, body){
@@ -79,7 +81,7 @@ function aikin(_in, id, uid, debug){
 					var word = null;
 					
 					do { word  = words[Math.floor(Math.random() * words.length)]; }
-					while(word != null && !isNaN(word) && words.length > 1);
+					while(word != null && !isNaN(word) && /^[a-zA-Z]+$/.test(word) && words.length > 1);
 
 					var newword = replaceRandom(word);
 					var newmsg  = _r.replace(word, newword);
@@ -190,8 +192,9 @@ function isDenied(_from, _id) { return ((denylist.indexOf(_from.toString().toLow
 
 bot.on('message', (msg) => {
 	var txt   = msg.text;
-	var from  = msg.chat.username;
+	var from  = msg.from.username;
 	var frID  = msg.from.id;
+
 	//Username could be non-existant
 	if (typeof from === 'undefined' || !from || from == null) from = frID;
 	var name  = msg.chat.first_name;
@@ -257,7 +260,7 @@ bot.on('message', (msg) => {
 				);
 			}
 			else if (cmd.toLowerCase() == "help") {
-				var _r = "AIKIN: Commands:\n\n !-- status\n !-- git\n !-- debug\n !-- ping\n !-- clearcache\n !-- emo\n !-- silent\n !-- banner\n !-- whoami\n !-- pic\n !-- help";
+				var _r = "AIKIN: Commands:\n\n !-- status\n !-- git\n !-- debug\n !-- ping\n !-- clearcache\n !-- emo\n !-- banner\n !-- whoami\n !-- pic\n !-- help";
 				bot.sendMessage(_id, _r);
 				console.log('AIKIN REPLY: ' + _r + "\n");
 			}
@@ -322,14 +325,8 @@ bot.on('message', (msg) => {
 				}
 			}
 			else if (cmd.toLowerCase() == "banner") {
-				bot.sendPhoto({
-					chatId: _id,
-					caption: 'AIKIN Banner',
-					photo: './banner.jpg'
-				}, function(err, msg) {
-					console.log(err);
-					console.log(msg);
-				});
+				var imgUrl = "https://nulldev.org/img/banner.jpg";
+				bot.sendPhoto(_id, imgUrl);
 			}
 			else {
 				var _r = "AIKIN: Unknown command. Please use !-- help for a list of commands.";
@@ -385,6 +382,6 @@ bot.on('message', (msg) => {
 			console.log(_s);
 			console.log('\nAIKIN REPLY: ' + ans + "\n");
 		}
-		else aikin(txt, _id, frID, false);
+		else aikin(txt, _id, frID, false, msg.from.username);
 	}
 });
