@@ -59,7 +59,7 @@ function aikin(_in, id, uid, debug, un){
 	var uname = (isset(un) ? un : "Unknown");
 
 	var options = {
-		uri : rooturl + '/aikin?in=' + encodeURI(_in) + '&token=' + nltoken + '&userid=' + uid + "&username=" + uname,
+		uri : rooturl + '/aikin?in=' + encodeURI(_in) + '&token=' +encodeURI(nltoken) + '&userid=' + encodeURI(uid) + "&username=" + encodeURI(uname),
 		method : 'GET'
 	};
 	request(options, function(error, response, body){
@@ -197,7 +197,7 @@ bot.on('message', (msg) => {
 
 	//Username could be non-existant
 	if (typeof from === 'undefined' || !from || from == null) from = frID;
-	var name  = msg.chat.first_name;
+	var name  = msg.from.first_name;
 	//Just to be save
 	if (typeof name === 'undefined' || !name || name == null) name = "Unknown";
 	//If picture
@@ -382,6 +382,6 @@ bot.on('message', (msg) => {
 			console.log(_s);
 			console.log('\nAIKIN REPLY: ' + ans + "\n");
 		}
-		else aikin(txt, _id, frID, false, msg.from.username);
+		else aikin(txt, _id, frID, false, (isset(msg.from.username) ? msg.from.username : msg.from.first_name));
 	}
 });
