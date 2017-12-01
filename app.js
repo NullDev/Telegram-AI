@@ -210,182 +210,181 @@ bot.on('message', (msg) => {
 	var _pic  = msg.photo;
 	if (typeof _pic !== 'undefined' && _pic != null) _pic = msg.photo[0].file_id;
 	const _id = msg.chat.id;
-	if (true){
-		console.log(_s);
-		if (typeof txt !== 'undefined' && txt != null) console.log('\nUSER ' +  from + ' MADE CHAT MESSAGE: ' + txt + "\n");
-		if (typeof txt === 'undefined' || txt == null) console.log('\nUSER ' +  from + ' MADE CHAT PICTURE: ' + _pic + "\n");
-		console.log(JSON.stringify(msg));
-		if (isDev == 1 && !isaDev(from, frID) && txt.toLowerCase() != "!-- whoami"){
-			//bot.sendMessage(_id, "ID: " + frID + "\nName: " + name + "\nUser: " + from + "\nChatID: " + _id);
-			bot.sendMessage(_id, 
-				"Sorry, " + name + 
-				"... I am currently in maintenance mode! That normally means that my developer Chris is fixing bugs or programming features. " +
-				"So please check back later :)\n\nYou can contact the developer for more information:\n\n@NullPing"
-			);
-			console.log(_s);
-			console.log('\nUSER ' + from + ' GOT DENIED. RESON: Maintenance Mode\n');
-			console.log(from.toString().toLowerCase() + " != " + devs.toString());
-		}
-		else if (isDenied(from, frID)){
-			bot.sendMessage(_id, 
-				"Sorry, " + name + 
-				"... You got denied from using this bot. \n\nIf you think this is a mistake, please" +
-				" contact the developer:\n\n@NullPing"
-			);
-			console.log(_s);
-			console.log('\nUSER ' + from + ' GOT DENIED. RESON: Banned\n');
-		}
-		else if (txt.toLowerCase() == "/start"){
-			var disUser = (isset(msg.from.username) ? msg.from.username : msg.from.first_name);
-			console.log('\nUSER ' + disUser + ' STARTED FIRST TIME\n');
-			var craftedMsg = "Hii " + disUser + "!";
-			bot.sendMessage(_id, craftedMsg + "\n\n");
-			console.log('AIKIN REPLY: ' + craftedMsg);
-		}
-		else if (typeof _pic !== 'undefined' && _pic != null){
-			console.log('\nUSER ' + from + ' SENT PICTURE');
-			var options = {
-				uri: "https:\/\/api.telegram.org\/bot" + token + "\/getFile?file_id=" + _pic,
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' }
-			};
-			try{
-				request(options, function(error, response, body){
-					var jsonraw = JSON.parse(body), _p = jsonraw.result.file_path;
-					console.log('\nGOT PATH: ' + _p);
-					var uri = "https:\/\/api.telegram.org\/file\/bot" + token + "\/" + _p;
-					console.log('GOT URI: ' + uri);
-					desc(uri, _id);
-				});
-			}
-			catch(err){ return; }
-		}
-		else if (txt.indexOf('!-- ') === 0){
-			var cmd = txt.slice('!-- '.length);
-			console.log('\nUSER ' + from + ' PERFORMED COMMAND: ' + cmd + '\n');
-			if (cmd.toLowerCase() == "status") {
-				bot.sendMessage(_id, 
-					"AIKIN Health Status: " +
-					"\n--- Telegram API: Online" +
-					"\n--- In Devmode: " + ((isDev == 1) ? "Yes" : "No") +
-					"\n--- Main Developer: @NullPing" +
-					"\n--- Users marked as Devs: " + devs.toString()
-				);
-			}
-			else if (cmd.toLowerCase() == "help") {
-				var _r = "AIKIN: Commands:\n\n !-- status\n !-- git\n !-- debug\n !-- ping\n !-- clearcache\n !-- emo\n !-- banner\n !-- whoami\n !-- pic\n !-- help";
-				bot.sendMessage(_id, _r);
-				console.log('AIKIN REPLY: ' + _r + "\n");
-			}
-			else if (cmd.toLowerCase() == "clearcache") { 
-				if (isaDev(from, frID)){ resetAikin(true, frID, function(x){ bot.sendMessage(_id, "AIKIN: Cache Cleared.\nTotal Interactions before clear: " + x); }); }
-				else bot.sendMessage(_id, "AIKIN: Insufficient permissions...");
-			}
-			else if (cmd.toLowerCase() == "git") {
-				var _r = "The bot (client) is open source! :)\nGrab the code here:\n\nhttps://github.com/NLDev/Telegram-AI";
-				bot.sendMessage(_id, _r);
-				console.log('AIKIN REPLY: ' + _r + "\n");
-			}
-			else if (cmd.toLowerCase() == "ping") {
-				var startTime = new Date();
-				var _r = "Pong!";
-				bot.sendMessage(_id, _r);
-				console.log('\nAIKIN REPLY: ' + _r);
-				var diff = new Date() - startTime;
-				var _r2 = "(Took " + diff + "MS)";
-				bot.sendMessage(_id, _r2);
-				console.log('AIKIN REPLY: ' + _r2 + "\n");
-			}
-			else if (cmd.toLowerCase().indexOf("emo") === 0) {
-				var _txt = cmd.slice('emo '.length);
-				if (_txt.replace(/\s/gi, "") == ""){
-					var _r = "AIKIN: Usage: !-- emo your text";
-					bot.sendMessage(_id, _r);
-					console.log('\nAIKIN REPLY: ' + _r + "\n");
-				}
-				else evalEmo(_txt, _id);
-			}
-			else if (cmd.toLowerCase().indexOf("debug") === 0) {
-				var _txt = cmd.slice('debug '.length);
-				if (_txt.replace(/\s/gi, "") == ""){
-					var _r = "AIKIN: Usage: !-- debug your text";
-					bot.sendMessage(_id, _r);
-					console.log('\nAIKIN REPLY: ' + _r + "\n");
-				}
-				else aikin(_txt, _id, frID, true, (isset(msg.from.username) ? msg.from.username : msg.from.first_name));
-			}
-			else if (cmd.toLowerCase() == "whoami") {
-				bot.sendMessage(_id, 
-					"First Name: "      + msg.chat.first_name    + 
-					"\nUser name: "     + from                   +
-					"\nLanguage-Code: " + msg.from.language_code +
-					"\nID: "            + msg.from.id            +
-					"\nIs Dev: "        + (isaDev(from, frID) ? "Yes" : "No")
-				);
-			}
-			else if (cmd.toLowerCase().indexOf("pic") === 0) {
-				var _url = cmd.slice('pic '.length);
-				if (_url.replace(/\s/gi, "") == ""){
-					var _r = "AIKIN: Usage: !-- pic link";
-					bot.sendMessage(_id, _r);
-					console.log('\nAIKIN REPLY: ' + _r + "\n");
-				}
-				else if (isURL(_url)) desc(_url, _id);
-				else {
-					var _r = "AIKIN: This URL seems to be invalid";
-					bot.sendMessage(_id, _r);
-					console.log('\nAIKIN REPLY: ' + _r + "\n");
-				}
-			}
-			else if (cmd.toLowerCase() == "banner") { bot.sendPhoto(_id, "https://nulldev.org/img/banner.jpg"); }
-			else {
-				var _r = "AIKIN: Unknown command. Please use !-- help for a list of commands.";
-				bot.sendMessage(_id, _r);
-				console.log('AIKIN REPLY: ' + _r + "\n");
-			}
-		}
 
-		//Developer Info (Without Database in case offline)
-		else if (/^((who is|whos|who's) (ur|your) (dev|developer|coder|programmer|owner|creator|maker))+(.*)$/i.test(txt) ||
-				 /^((who|who did|whod|who'd|who is) (made|created|programmed|coded|programed|developed|) (u|you|aikin))+(.*)$/i.test(txt)){
-			var d1_f = [
-				"His username is @NullPing",
-				"@NullPing is his username",
-				"@NullPing would be his username!",
-				"You can contact him here: @NullPing",
-				"If you wanna contact him, his username is @NullPing",
-				"If you wanna message him, his username is @NullPing",
-				"If you want to contact him, his username is @NullPing",
-				"If you wanna contact him, his username is @NullPing",
-				"His username would be @NullPing"
-			],  
-			d1 = d1_f[Math.floor(Math.random() * d1_f.length)],
-			ansmsg = [
-				"Chris. " + d1,
-				"Chris (@NullPing)",
-				"Chris! " + d1,
-				"Chris! (@NullPing)",
-				"Chris is my dev! " + d1,
-				"Chris is my dev! (@NullPing)",
-				"Chris-Sensai, " + d1,
-				"Chris-Sensai (@NullPing)",
-				"My developer is chris and " + d1,
-				"My developer is chris. " + d1,
-				"My developer is chris. (@NullPing)",
-				"Chris is my developer! " + d1,
-				"Chris is my developer! (@NullPing)",
-				"It's chris! " + d1,
-				"It's chris! (@NullPing)",
-				"Chris is my creator. " + d1,
-				"Chris is my creator. (@NullPing)",
-				"My creator is chris! " + d1,
-				"My creator is chris! (@NullPing)"
-			],
-			ans = ansmsg[Math.floor(Math.random() * ansmsg.length)];
-			bot.sendMessage(_id, ans);
-			console.log(_s);
-			console.log('\nAIKIN REPLY: ' + ans + "\n");
-		}
-		else aikin(txt, _id, frID, false, (isset(msg.from.username) ? msg.from.username : msg.from.first_name));
+	console.log(_s);
+	if (typeof txt !== 'undefined' && txt != null) console.log('\nUSER ' +  from + ' MADE CHAT MESSAGE: ' + txt + "\n");
+	if (typeof txt === 'undefined' || txt == null) console.log('\nUSER ' +  from + ' MADE CHAT PICTURE: ' + _pic + "\n");
+	console.log(JSON.stringify(msg));
+	if (isDev == 1 && !isaDev(from, frID) && txt.toLowerCase() != "!-- whoami"){
+		//bot.sendMessage(_id, "ID: " + frID + "\nName: " + name + "\nUser: " + from + "\nChatID: " + _id);
+		bot.sendMessage(_id, 
+			"Sorry, " + name + 
+			"... I am currently in maintenance mode! That normally means that my developer Chris is fixing bugs or programming features. " +
+			"So please check back later :)\n\nYou can contact the developer for more information:\n\n@NullPing"
+		);
+		console.log(_s);
+		console.log('\nUSER ' + from + ' GOT DENIED. RESON: Maintenance Mode\n');
+		console.log(from.toString().toLowerCase() + " != " + devs.toString());
 	}
+	else if (isDenied(from, frID)){
+		bot.sendMessage(_id, 
+			"Sorry, " + name + 
+			"... You got denied from using this bot. \n\nIf you think this is a mistake, please" +
+			" contact the developer:\n\n@NullPing"
+		);
+		console.log(_s);
+		console.log('\nUSER ' + from + ' GOT DENIED. RESON: Banned\n');
+	}
+	else if (txt.toLowerCase() == "/start"){
+		var disUser = (isset(msg.from.username) ? msg.from.username : msg.from.first_name);
+		console.log('\nUSER ' + disUser + ' STARTED FIRST TIME\n');
+		var craftedMsg = "Hii " + disUser + "!";
+		bot.sendMessage(_id, craftedMsg + "\n\n");
+		console.log('AIKIN REPLY: ' + craftedMsg);
+	}
+	else if (typeof _pic !== 'undefined' && _pic != null){
+		console.log('\nUSER ' + from + ' SENT PICTURE');
+		var options = {
+			uri: "https:\/\/api.telegram.org\/bot" + token + "\/getFile?file_id=" + _pic,
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' }
+		};
+		try{
+			request(options, function(error, response, body){
+				var jsonraw = JSON.parse(body), _p = jsonraw.result.file_path;
+				console.log('\nGOT PATH: ' + _p);
+				var uri = "https:\/\/api.telegram.org\/file\/bot" + token + "\/" + _p;
+				console.log('GOT URI: ' + uri);
+				desc(uri, _id);
+			});
+		}
+		catch(err){ return; }
+	}
+	else if (txt.indexOf('!-- ') === 0){
+		var cmd = txt.slice('!-- '.length);
+		console.log('\nUSER ' + from + ' PERFORMED COMMAND: ' + cmd + '\n');
+		if (cmd.toLowerCase() == "status") {
+			bot.sendMessage(_id, 
+				"AIKIN Health Status: " +
+				"\n--- Telegram API: Online" +
+				"\n--- In Devmode: " + ((isDev == 1) ? "Yes" : "No") +
+				"\n--- Main Developer: @NullPing" +
+				"\n--- Users marked as Devs: " + devs.toString()
+				);
+		}
+		else if (cmd.toLowerCase() == "help") {
+			var _r = "AIKIN: Commands:\n\n !-- status\n !-- git\n !-- debug\n !-- ping\n !-- clearcache\n !-- emo\n !-- banner\n !-- whoami\n !-- pic\n !-- help";
+			bot.sendMessage(_id, _r);
+			console.log('AIKIN REPLY: ' + _r + "\n");
+		}
+		else if (cmd.toLowerCase() == "clearcache") { 
+			if (isaDev(from, frID)){ resetAikin(true, frID, function(x){ bot.sendMessage(_id, "AIKIN: Cache Cleared.\nTotal Interactions before clear: " + x); }); }
+			else bot.sendMessage(_id, "AIKIN: Insufficient permissions...");
+		}
+		else if (cmd.toLowerCase() == "git") {
+			var _r = "The bot (client) is open source! :)\nGrab the code here:\n\nhttps://github.com/NLDev/Telegram-AI";
+			bot.sendMessage(_id, _r);
+			console.log('AIKIN REPLY: ' + _r + "\n");
+		}
+		else if (cmd.toLowerCase() == "ping") {
+			var startTime = new Date();
+			var _r = "Pong!";
+			bot.sendMessage(_id, _r);
+			console.log('\nAIKIN REPLY: ' + _r);
+			var diff = new Date() - startTime;
+			var _r2 = "(Took " + diff + "MS)";
+			bot.sendMessage(_id, _r2);
+			console.log('AIKIN REPLY: ' + _r2 + "\n");
+		}
+		else if (cmd.toLowerCase().indexOf("emo") === 0) {
+			var _txt = cmd.slice('emo '.length);
+			if (_txt.replace(/\s/gi, "") == ""){
+				var _r = "AIKIN: Usage: !-- emo your text";
+				bot.sendMessage(_id, _r);
+				console.log('\nAIKIN REPLY: ' + _r + "\n");
+			}
+			else evalEmo(_txt, _id);
+		}
+		else if (cmd.toLowerCase().indexOf("debug") === 0) {
+			var _txt = cmd.slice('debug '.length);
+			if (_txt.replace(/\s/gi, "") == ""){
+				var _r = "AIKIN: Usage: !-- debug your text";
+				bot.sendMessage(_id, _r);
+				console.log('\nAIKIN REPLY: ' + _r + "\n");
+			}
+			else aikin(_txt, _id, frID, true, (isset(msg.from.username) ? msg.from.username : msg.from.first_name));
+		}
+		else if (cmd.toLowerCase() == "whoami") {
+			bot.sendMessage(_id, 
+				"First Name: "      + msg.chat.first_name    + 
+				"\nUser name: "     + from                   +
+				"\nLanguage-Code: " + msg.from.language_code +
+				"\nID: "            + msg.from.id            +
+				"\nIs Dev: "        + (isaDev(from, frID) ? "Yes" : "No")
+			);
+		}
+		else if (cmd.toLowerCase().indexOf("pic") === 0) {
+			var _url = cmd.slice('pic '.length);
+			if (_url.replace(/\s/gi, "") == ""){
+				var _r = "AIKIN: Usage: !-- pic link";
+				bot.sendMessage(_id, _r);
+				console.log('\nAIKIN REPLY: ' + _r + "\n");
+			}
+			else if (isURL(_url)) desc(_url, _id);
+			else {
+				var _r = "AIKIN: This URL seems to be invalid";
+				bot.sendMessage(_id, _r);
+				console.log('\nAIKIN REPLY: ' + _r + "\n");
+			}
+		}
+		else if (cmd.toLowerCase() == "banner") { bot.sendPhoto(_id, "https://nulldev.org/img/banner.jpg"); }
+		else {
+			var _r = "AIKIN: Unknown command. Please use !-- help for a list of commands.";
+			bot.sendMessage(_id, _r);
+			console.log('AIKIN REPLY: ' + _r + "\n");
+		}
+	}
+
+	//Developer Info (Without Database in case offline)
+	else if (/^((who is|whos|who's) (ur|your) (dev|developer|coder|programmer|owner|creator|maker))+(.*)$/i.test(txt) ||
+		 /^((who|who did|whod|who'd|who is) (made|created|programmed|coded|programed|developed|) (u|you|aikin))+(.*)$/i.test(txt)){
+		var d1_f = [
+			"His username is @NullPing",
+			"@NullPing is his username",
+			"@NullPing would be his username!",
+			"You can contact him here: @NullPing",
+			"If you wanna contact him, his username is @NullPing",
+			"If you wanna message him, his username is @NullPing",
+			"If you want to contact him, his username is @NullPing",
+			"If you wanna contact him, his username is @NullPing",
+			"His username would be @NullPing"
+		],  
+		d1 = d1_f[Math.floor(Math.random() * d1_f.length)],
+		ansmsg = [
+			"Chris. " + d1,
+			"Chris (@NullPing)",
+			"Chris! " + d1,
+			"Chris! (@NullPing)",
+			"Chris is my dev! " + d1,
+			"Chris is my dev! (@NullPing)",
+			"Chris-Sensai, " + d1,
+			"Chris-Sensai (@NullPing)",
+			"My developer is chris and " + d1,
+			"My developer is chris. " + d1,
+			"My developer is chris. (@NullPing)",
+			"Chris is my developer! " + d1,
+			"Chris is my developer! (@NullPing)",
+			"It's chris! " + d1,
+			"It's chris! (@NullPing)",
+			"Chris is my creator. " + d1,
+			"Chris is my creator. (@NullPing)",
+			"My creator is chris! " + d1,
+			"My creator is chris! (@NullPing)"
+		],
+		ans = ansmsg[Math.floor(Math.random() * ansmsg.length)];
+		bot.sendMessage(_id, ans);
+		console.log(_s);
+		console.log('\nAIKIN REPLY: ' + ans + "\n");
+	}
+	else aikin(txt, _id, frID, false, (isset(msg.from.username) ? msg.from.username : msg.from.first_name));
 });
