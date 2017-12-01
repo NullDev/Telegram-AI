@@ -97,9 +97,10 @@ function aikin(_in, id, uid, debug, un){
 						 "\nConfidence: "       + ansParsed.confidence + 
 						 "\nInteractions: "     + ansParsed.interaction_count + 
 						 "\nHas Typo: "         + hasTypo +
-						 "\nCalculation Time: " + ansParsed.calculation_time +
+						 "\nCalculation Time: " + ansParsed.calculation_time + "MS" +
+						 "\nResponse Time: "    + ansParsed.response_time + "MS" +
 						 "\nRandom Number: "    + ansParsed.random_integer;
-				bot.sendMessage(id, _r);
+				bot.sendMessage(id, _r, { reply_to_message_id: id.message_id });
 				console.log('\nAIKIN REPLY: ' + _r);
 			}
 		}
@@ -190,6 +191,11 @@ function isset(_var) { return ((_var && _var != null && _var != "" ) ? true : fa
 function isaDev(_from, _id) { return ((devs.indexOf(_from.toString().toLowerCase()) > -1 || devs.indexOf(_id.toString()) > -1) ? true : false); }
 function isDenied(_from, _id) { return ((denylist.indexOf(_from.toString().toLowerCase()) > -1 || denylist.indexOf(_id.toString().toLowerCase()) > -1) ? true : false); }
 
+function replStr(s, words, replacement){ 
+	var re = new RegExp( '\\b' + words.join('|') + '\\b','gi');
+	return s.replace(re, replacement);
+}
+
 bot.on('message', (msg) => {
 	var txt   = msg.text;
 	var from  = msg.from.username;
@@ -199,7 +205,7 @@ bot.on('message', (msg) => {
 	if (typeof from === 'undefined' || !from || from == null) from = frID;
 	var name  = msg.from.first_name;
 	//Just to be save
-	if (typeof name === 'undefined' || !name || name == null) name = "Unknown";
+	if (typeof name === 'undefined' || !name || name == null) name = msg.from.first_name;
 	//If picture
 	var _pic  = msg.photo;
 	if (typeof _pic !== 'undefined' && _pic != null) _pic = msg.photo[0].file_id;
@@ -228,6 +234,13 @@ bot.on('message', (msg) => {
 			);
 			console.log(_s);
 			console.log('\nUSER ' + from + ' GOT DENIED. RESON: Banned\n');
+		}
+		else if (txt.toLowerCase() == "/start"){
+			var disUser = (isset(msg.from.username) ? msg.from.username : msg.from.first_name);
+			console.log('\nUSER ' + disUser + ' STARTED FIRST TIME\n');
+			var craftedMsg = "Hii " + disUser + "!";
+			bot.sendMessage(_id, craftedMsg + "\n\n");
+			console.log('AIKIN REPLY: ' + craftedMsg);
 		}
 		else if (typeof _pic !== 'undefined' && _pic != null){
 			console.log('\nUSER ' + from + ' SENT PICTURE');
@@ -299,7 +312,7 @@ bot.on('message', (msg) => {
 					bot.sendMessage(_id, _r);
 					console.log('\nAIKIN REPLY: ' + _r + "\n");
 				}
-				else aikin(_txt, _id, frID, true);
+				else aikin(_txt, _id, frID, true, (isset(msg.from.username) ? msg.from.username : msg.from.first_name));
 			}
 			else if (cmd.toLowerCase() == "whoami") {
 				bot.sendMessage(_id, 
@@ -324,23 +337,14 @@ bot.on('message', (msg) => {
 					console.log('\nAIKIN REPLY: ' + _r + "\n");
 				}
 			}
-			else if (cmd.toLowerCase() == "banner") {
-				var imgUrl = "https://nulldev.org/img/banner.jpg";
-				bot.sendPhoto(_id, imgUrl);
-			}
+			else if (cmd.toLowerCase() == "banner") { bot.sendPhoto(_id, "https://nulldev.org/img/banner.jpg"); }
 			else {
 				var _r = "AIKIN: Unknown command. Please use !-- help for a list of commands.";
 				bot.sendMessage(_id, _r);
 				console.log('AIKIN REPLY: ' + _r + "\n");
 			}
 		}
-		//First message
-		else if (txt.toLowerCase() == "start"){
-			console.log('\nUSER ' + from + ' STARTED FIRST TIME\n');
-			var craftedMsg = "Hii " + name + "!";
-			bot.sendMessage(_id, craftedMsg + "\n\n");
-			console.log('AIKIN REPLY: ' + craftedMsg);
-		}
+
 		//Developer Info (Without Database in case offline)
 		else if (/^((who is|whos|who's) (ur|your) (dev|developer|coder|programmer|owner|creator|maker))+(.*)$/i.test(txt) ||
 				 /^((who|who did|whod|who'd|who is) (made|created|programmed|coded|programed|developed|) (u|you|aikin))+(.*)$/i.test(txt)){
