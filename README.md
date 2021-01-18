@@ -1,4 +1,4 @@
-<img style="width: 100%; height: auto;" src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/banner.jpg" />
+<img style="width: 100%; height: auto;" src="https://raw.githubusercontent.com/NullDev/Telegram-AI/master/.src/banner.jpg" />
 
 # Telegram-AI: Aikin
 This is the code of the Telegram bot for AIKIN
@@ -61,8 +61,8 @@ Full list of open source clients:
 
 | Platform | Repository |
 |----------|------------|
-| Telegram | <a href="https://github.com/NLDev/Telegram-AI">Telegram AI</a>   |
-| Slack    | <a href="https://github.com/NLDev/Slack-Bot-AI">Slack Bot AI</a> |
+| Telegram | <a href="https://github.com/NullDev/Telegram-AI">Telegram AI</a>   |
+| Slack    | <a href="https://github.com/NullDev/Slack-Bot-AI">Slack Bot AI</a> |
 | IRC      | Under Construction                                               |
 | Kik      | Under Construction                                               |
 
@@ -72,22 +72,22 @@ Full list of open source clients:
 <br>
 <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike> Screenshots Chat <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike><br><br>
 <div style="display:flex;">
-<img height="500" width="281" src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s2.jpeg" />
-<img height="500" width="281" src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s3.jpeg" />
-<img height="500" width="281" src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s4.jpeg" />
+<img height="500" width="281" src="https://raw.githubusercontent.com/NullDev/Telegram-AI/master/.src/s2.jpeg" />
+<img height="500" width="281" src="https://raw.githubusercontent.com/NullDev/Telegram-AI/master/.src/s3.jpeg" />
+<img height="500" width="281" src="https://raw.githubusercontent.com/NullDev/Telegram-AI/master/.src/s4.jpeg" />
 </div>
 <br>
 </p>
 
-**More screenshots here:** <a href="https://github.com/NLDev/Telegram-AI/blob/master/SHOWCASE.md">SHOWCASE</a>
+**More screenshots here:** <a href="https://github.com/NullDev/Telegram-AI/blob/master/SHOWCASE.md">SHOWCASE</a>
 
 <p align="center">
 <br>
 <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike> Screenshots Image Recognition <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike><br><br>
 <div style="display:flex;">
-<img height="500" width="281" src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s6.jpg" />
-<img height="500" width="281" src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s7.jpg" />
-<img height="500" width="281" src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s8.jpg" />
+<img height="500" width="281" src="https://raw.githubusercontent.com/NullDev/Telegram-AI/master/.src/s6.jpg" />
+<img height="500" width="281" src="https://raw.githubusercontent.com/NullDev/Telegram-AI/master/.src/s7.jpg" />
+<img height="500" width="281" src="https://raw.githubusercontent.com/NullDev/Telegram-AI/master/.src/s8.jpg" />
 </div>
 <br>
 </p>
@@ -131,10 +131,10 @@ If you want to use this telegram bot with your own API, you need to replace `htt
 <br>
 <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike> The Bot in Action <strike>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strike><br><br>
 <p>Aikin Chat</p>
-<img src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s1.png" /><br>
+<img src="https://raw.githubusercontent.com/NullDev/Telegram-AI/master/.src/s1.png" /><br>
 <p>Aikin Image Recognition</p>
-<img src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s5.png" /><br>
+<img src="https://raw.githubusercontent.com/NullDev/Telegram-AI/master/.src/s5.png" /><br>
 <p>Aikin Emotion Evaluation & Debug</p>
-<img src="https://raw.githubusercontent.com/NLDev/Telegram-AI/master/.src/s9.png" /><br>
+<img src="https://raw.githubusercontent.com/NullDev/Telegram-AI/master/.src/s9.png" /><br>
 <br>
 </p>
